@@ -17,8 +17,6 @@ export default function Sidebar2({
   setIsCollapsed,
 }: SidebarProps) {
   const [navOpened, setNavOpened] = useState(false)
-
-  /* Make body not scrollable when navBar is opened */
   useEffect(() => {
     if (navOpened) {
       document.body.classList.add('overflow-hidden')
@@ -49,36 +47,17 @@ export default function Sidebar2({
               viewBox='0 0 256 256'
               className={`transition-all ${isCollapsed ? 'h-6 w-6' : 'h-8 w-8'}`}
             >
-              <rect width='256' height='256' fill='none'></rect>
-              <line
-                x1='208'
-                y1='128'
-                x2='128'
-                y2='208'
-                fill='none'
-                stroke='currentColor'
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                strokeWidth='16'
-              ></line>
-              <line
-                x1='192'
-                y1='40'
-                x2='40'
-                y2='192'
-                fill='none'
-                stroke='currentColor'
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                strokeWidth='16'
-              ></line>
-              <span className='sr-only'>Website Name</span>
+              <rect x="30" y="100" width="50" height="156" fill="currentColor"></rect>
+
+              <rect x="90" y="20" width="50" height="256" fill="currentColor"></rect>
+
+              <rect x="150" y="140" width="50" height="116" fill="currentColor"></rect>
             </svg>
             <div
               className={`flex flex-col justify-end truncate ${isCollapsed ? 'invisible w-0' : 'visible w-auto'}`}
             >
               <span className='font-medium'>Inspectra Admin</span>
-              <span className='text-xs'>Vite + InspectraUI</span>
+              <span className='text-xs'>By Dubotech</span>
             </div>
           </div>
 

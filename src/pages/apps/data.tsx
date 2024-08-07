@@ -93,7 +93,7 @@ export const apps = [
     name: 'GitLab',
     logo: <IconBrandGitlab />,
     connected: false,
-    desc: 'Efficiently manage code projects with GitLab integration.',
+    desc: 'Efficiently manage code inspections with GitLab integration.',
   },
   {
     name: 'Discord',

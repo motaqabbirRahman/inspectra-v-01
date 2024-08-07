@@ -52,9 +52,21 @@ const router = createBrowserRouter([
         }),
       },
       {
-        path: 'tasks',
+        path: 'inspections',
         lazy: async () => ({
-          Component: (await import('@/pages/tasks')).default,
+          Component: (await import('@/pages/inspections')).default,
+        }),
+      },
+      {
+        path: 'inspections/:inspectionId',
+        lazy: async () => ({
+          Component: (await import('@/pages/inspections/details/inspection-details')).default,
+        }),
+      },
+      {
+        path: 'inspections/:inspectionId/generate-report',
+        lazy: async () => ({
+          Component: (await import('./pages/inspections/generate-report')).default,
         }),
       },
       {
