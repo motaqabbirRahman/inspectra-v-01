@@ -15,6 +15,10 @@ import useFetchMission from '@/hooks/use-fetch-mission'
 import BreadCrumb from './components/bread-crumb'
 import { Skeleton } from '@/components/ui/skeleton'
 import map from '../../../public/static/images/google-map-placeholder.png'
+<<<<<<< HEAD
+=======
+
+>>>>>>> cb18255d5027f6bae6b7af81390f28079c61b199
 
 const InspectionDetails = () => {
   const [activeTab, setActiveTab] = useState<string>('camera')
