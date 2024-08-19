@@ -14,6 +14,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import useFetchMission from '@/hooks/use-fetch-mission'
 import BreadCrumb from './components/bread-crumb'
 import { Skeleton } from '@/components/ui/skeleton'
+import google-map-placeholder from '../../../../public/static/images/google-map-placeholder.png'
 
 const InspectionDetails = () => {
   const [activeTab, setActiveTab] = useState<string>('camera')
@@ -127,7 +128,7 @@ const InspectionDetails = () => {
                       <div className='m-3 flex lg:col-span-4'>
                         <AspectRatio ratio={16 / 9}>
                           <img
-                            src='../../../../public/static/images/google-map-placeholder.png'
+                            src={google-map-placeholder}
                             alt='Google Map'
                             className='h-full w-full rounded-lg object-cover'
                           />
