@@ -38,7 +38,10 @@ const useFetchMission = (inspectionId: string | undefined) => {
         }
 
         const response = await fetch(
-          `https://inspectraapi.dubotech.com/api/missions/${inspectionId}`
+          `https://inspectraapi.dubotech.com/api/missions/${inspectionId}`,
+          {
+            mode: 'cors',
+          }
         )
 
         if (!response.ok) {

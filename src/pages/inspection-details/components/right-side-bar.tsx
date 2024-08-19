@@ -43,7 +43,7 @@ export function RightSideBar() {
           </AspectRatio> */}
           <AspectRatio ratio={19 / 12}>
             <img
-              src='../../../../../public/images/tuna.png'
+              src='../../../../../public/static/images/tuna.png'
               alt='tuna'
               className='ml-9'
             />

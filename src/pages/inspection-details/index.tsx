@@ -127,7 +127,7 @@ const InspectionDetails = () => {
                       <div className='m-3 flex lg:col-span-4'>
                         <AspectRatio ratio={16 / 9}>
                           <img
-                            src='../../../../public/images/google-map-placeholder.png'
+                            src='../../../../public/static/images/google-map-placeholder.png'
                             alt='Google Map'
                             className='h-full w-full rounded-lg object-cover'
                           />
