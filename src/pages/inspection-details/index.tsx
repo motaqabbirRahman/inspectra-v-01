@@ -14,7 +14,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import useFetchMission from '@/hooks/use-fetch-mission'
 import BreadCrumb from './components/bread-crumb'
 import { Skeleton } from '@/components/ui/skeleton'
-import map from '../../../../public/static/images/google-map-placeholder.png'
+import map from '../../../public/static/images/google-map-placeholder.png'
 
 
 const InspectionDetails = () => {
