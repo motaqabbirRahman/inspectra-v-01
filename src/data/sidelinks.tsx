@@ -1,10 +1,7 @@
 import {
-  IconChartHistogram,
   IconChecklist,
   IconLayoutDashboard,
   IconSettings,
-  IconShip,
-  IconReport,
 } from '@tabler/icons-react'
 
 export interface NavLink {

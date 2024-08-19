@@ -4,7 +4,6 @@ import {
   ResponsiveContainer,
   XAxis,
   YAxis,
-  Tooltip,
   Legend,
 } from 'recharts'
 

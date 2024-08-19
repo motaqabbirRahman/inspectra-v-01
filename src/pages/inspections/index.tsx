@@ -5,9 +5,6 @@ import { UserNav } from '@/components/user-nav'
 import { Link } from 'react-router-dom'
 import { Layout, LayoutBody, LayoutHeader } from '@/components/custom/layout'
 import { DataTable } from './components/data-table'
-import { columns } from './components/columns'
-import { inspections } from './data/inspections'
-import { Skeleton } from '@/components/ui/skeleton'
 import { Mission, MissionData } from '@/types/types'
 import { DataTableSkeleton } from './components/data-table-skeleton'
 
@@ -15,7 +12,6 @@ export default function Inspections() {
   const [inspections, setInspections] = useState<MissionData[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const [dataLength, setDataLength] = useState(0)
 
   useEffect(() => {
     const fetchInspections = async () => {
@@ -27,7 +23,6 @@ export default function Inspections() {
           throw new Error('Failed to fetch inspections')
         }
         const data: Mission[] = await response.json()
-        const numberOfMissions = data.length
 
         const transformedData: MissionData[] = data.map((inspection) => ({
           id: inspection['mission-details'].id,
@@ -50,9 +45,9 @@ export default function Inspections() {
     fetchInspections()
   }, [])
 
-  // if (error) {
-  //   return <p>Error: {error}</p>
-  // }
+  if (error) {
+    return <p>Error: {error}</p>
+  }
 
   const columns = [
     {

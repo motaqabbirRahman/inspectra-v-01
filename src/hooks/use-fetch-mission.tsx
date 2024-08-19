@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import { Mission } from '@/types/types'
 
 interface VideoUrls {
   cameraMain: string

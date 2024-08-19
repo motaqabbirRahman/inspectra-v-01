@@ -9,9 +9,7 @@ import {
 import { Button } from '@/components/custom/button'
 import { Separator } from '@/components/ui/separator'
 import { AspectRatio } from '@radix-ui/react-aspect-ratio'
-import ModelViewer from './model-viewer'
-import { Radio, BatteryMedium } from 'lucide-react'
-import ReactPlayer from 'react-player'
+import { Radio } from 'lucide-react'
 import SpeedAltChart from './speed-alt-chart'
 import { BatteryFull } from 'lucide-react'
 

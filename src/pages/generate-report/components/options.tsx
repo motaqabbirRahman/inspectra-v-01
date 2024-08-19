@@ -1,5 +1,4 @@
-import { useState, useEffect } from 'react'
-import { Badge } from '@/components/ui/badge'
+import { useState } from 'react'
 import { Label } from '@/components/ui/label'
 import {
   Select,
@@ -95,6 +94,7 @@ const Options = ({ onOptionsChange }: OptionsProps) => {
                 value={charts}
                 onValueChange={(value) => {
                   setCharts(value)
+                  setModel(value)
                   handleOptionChange()
                 }}
               >

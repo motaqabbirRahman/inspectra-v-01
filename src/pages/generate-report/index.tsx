@@ -1,18 +1,14 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect } from 'react'
 import { useParams, useLocation } from 'react-router-dom'
 import { PDFDownloadLink, PDFViewer } from '@react-pdf/renderer'
 import { Layout, LayoutHeader, LayoutBody } from '@/components/custom/layout'
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { Button } from '@/components/custom/button'
 import { Card } from '@/components/ui/card'
 import ThemeSwitch from '@/components/theme-switch'
 import { UserNav } from '@/components/user-nav'
-import { TopNav } from '@/components/top-nav'
-import { Search } from '@/components/search'
 import PdfDocument from './components/pdf-document'
 import Options from './components/options'
 import { Mission } from '@/types/types'
-import { topNavData } from '@/data/topnav'
 import { Badge } from '@/components/ui/badge'
 import { Skeleton } from '@/components/ui/skeleton'
 import { LoaderCircle } from 'lucide-react'
@@ -51,7 +47,6 @@ const GenerateReport = () => {
   const [pdfData, setPdfData] = useState<React.ReactElement | null>(null)
   const [isRegenerated, setIsRegenerated] = useState(true)
   const [isInitialLoad, setIsInitialLoad] = useState(false)
-  const [imageUrls, setImageUrls] = useState<string[] | ''>([])
 
   const handleOptionsChange = (newOptions: OptionsType) => {
     setOptions(newOptions)

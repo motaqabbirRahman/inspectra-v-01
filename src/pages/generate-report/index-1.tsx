@@ -1,18 +1,15 @@
-import { useState, useEffect } from 'react'
 import { Button } from '@/components/custom/button'
-import { Layout, LayoutHeader, LayoutBody } from '@/components/custom/layout'
-import { Card } from '@/components/ui/card'
-import ThemeSwitch from '@/components/theme-switch'
-import { UserNav } from '@/components/user-nav'
+import { Layout, LayoutBody, LayoutHeader } from '@/components/custom/layout'
 import { Search } from '@/components/search'
-import PdfDocument from './components/pdf-document'
-import Options from './components/options'
+import ThemeSwitch from '@/components/theme-switch'
+import { Card } from '@/components/ui/card'
+import { UserNav } from '@/components/user-nav'
 import { Mission } from '@/types/types'
-import { topNavData } from '@/data/topnav'
 import axios from 'axios'
-import { useParams, useLocation } from 'react-router-dom'
-
-const [pdfUrl, setPdfUrl] = useState<string | null>(null)
+import { useEffect, useState } from 'react'
+import { useLocation, useParams } from 'react-router-dom'
+import Options from './components/options'
+// const [pdfUrl, setPdfUrl] = useState<string | null>(null)
 
 type OptionsType = {
   model: string
@@ -29,7 +26,7 @@ const GenerateReport = () => {
   const [mission, setMission] = useState<Mission | null>(null)
   const [loading, setLoading] = useState<boolean>(true)
   const [error, setError] = useState<string | null>(null)
-  const [comment, setComment] = useState<string>('')
+  const [pdfUrl, setPdfUrl] = useState<string | null>(null)
 
   const [options, setOptions] = useState<OptionsType>({
     model: 'genesis',
@@ -38,9 +35,6 @@ const GenerateReport = () => {
     charts: 'speed-altitude',
     comment: '',
   })
-
-  const [pdfData, setPdfData] = useState<React.ReactElement | null>(null)
-  const [imageUrls, setImageUrls] = useState<string[]>([])
 
   const handleOptionsChange = (newOptions: OptionsType) => {
     setOptions(newOptions)
@@ -77,6 +71,7 @@ const GenerateReport = () => {
   useEffect(() => {
     regeneratePdf()
   }, [mission, options])
+
   useEffect(() => {
     return () => {
       if (pdfUrl) {
@@ -149,7 +144,6 @@ const GenerateReport = () => {
               </Button>
             </div>
           </div>
-          {pdfData && <Button></Button>}
         </div>
         <div className='grid gap-4 lg:grid-cols-2'>
           <Options onOptionsChange={handleOptionsChange} />
@@ -163,14 +157,7 @@ const GenerateReport = () => {
                   title='PDF Viewer'
                 />
                 <Button>
-                  {/* <PDFDownloadLink
-                    document={pdfData}
-                    fileName={`inspection-report-${inspectionId}.pdf`}
-                  >
-                    {({ loading }) =>
-                      loading ? 'Loading document...' : 'Download now!'
-                    }
-                  </PDFDownloadLink> */}
+                  {/* PDF download logic could be added here if needed */}
                 </Button>
               </div>
             )}

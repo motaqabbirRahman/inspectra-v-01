@@ -74,8 +74,6 @@ interface PdfDocumentProps {
   }
 }
 
-const proxyUrl = 'http://localhost:3001/proxy?url='
-
 const PdfDocument: React.FC<PdfDocumentProps> = ({
   mission,
   options,

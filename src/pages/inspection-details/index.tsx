@@ -1,7 +1,5 @@
 import { useState } from 'react'
 import { Button } from '@/components/custom/button'
-import { TopNav } from '@/components/top-nav'
-import { Search } from '@/components/search'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import ThemeSwitch from '@/components/theme-switch'
 import { UserNav } from '@/components/user-nav'
@@ -10,11 +8,9 @@ import { AspectRatio } from '@/components/ui/aspect-ratio'
 import { Card } from '@/components/ui/card'
 import { Waves, Gauge, ArrowDownNarrowWide } from 'lucide-react'
 import VideoPlayerCard from './components/video-player-card'
-import { Separator } from '@/components/ui/separator'
 import { RightSideBar } from './components/right-side-bar'
 import DataCard from './components/data-card'
 import { useParams, useNavigate } from 'react-router-dom'
-import { topNavData } from '@/data/topnav'
 import useFetchMission from '@/hooks/use-fetch-mission'
 import BreadCrumb from './components/bread-crumb'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -28,7 +24,7 @@ const InspectionDetails = () => {
   const { inspectionId } = useParams<{ inspectionId: string }>()
   const navigate = useNavigate()
 
-  const { mission, title, videoUrls, depth, current, speed, loading, error } =
+  const { mission, videoUrls, depth, current, speed, loading, error } =
     useFetchMission(inspectionId)
 
   const handleTabChange = (value: string) => {

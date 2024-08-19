@@ -94,12 +94,6 @@ const router = createBrowserRouter([
         }),
       },
       {
-        path: 'extra-components',
-        lazy: async () => ({
-          Component: (await import('@/pages/extra-components')).default,
-        }),
-      },
-      {
         path: 'settings',
         lazy: async () => ({
           Component: (await import('./pages/settings')).default,
