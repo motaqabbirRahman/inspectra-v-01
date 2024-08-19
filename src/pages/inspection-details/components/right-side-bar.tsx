@@ -12,6 +12,7 @@ import { AspectRatio } from '@radix-ui/react-aspect-ratio'
 import { Radio } from 'lucide-react'
 import SpeedAltChart from './speed-alt-chart'
 import { BatteryFull } from 'lucide-react'
+import tuna from '../../../../public/static/images/tuna.png'
 
 export function RightSideBar() {
   return (
@@ -42,11 +43,7 @@ export function RightSideBar() {
             />
           </AspectRatio> */}
           <AspectRatio ratio={19 / 12}>
-            <img
-              src='../../../../../public/static/images/tuna.png'
-              alt='tuna'
-              className='ml-9'
-            />
+            <img src={tuna} alt='tuna' className='ml-9' />
           </AspectRatio>
           {/* <AspectRatio ratio={16 / 9}>
             <ReactPlayer
