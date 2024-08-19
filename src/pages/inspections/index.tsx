@@ -1,16 +1,82 @@
+import { useEffect, useState } from 'react'
 import { Search } from '@/components/search'
 import ThemeSwitch from '@/components/theme-switch'
 import { UserNav } from '@/components/user-nav'
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'
 import { Layout, LayoutBody, LayoutHeader } from '@/components/custom/layout'
 import { DataTable } from './components/data-table'
 import { columns } from './components/columns'
 import { inspections } from './data/inspections'
+import { Skeleton } from '@/components/ui/skeleton'
+import { Mission, MissionData } from '@/types/types'
+import { DataTableSkeleton } from './components/data-table-skeleton'
 
 export default function Inspections() {
+  const [inspections, setInspections] = useState<MissionData[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+  const [dataLength, setDataLength] = useState(0)
+
+  useEffect(() => {
+    const fetchInspections = async () => {
+      try {
+        const response = await fetch(
+          'https://inspectraapi.dubotech.com/api/missions/'
+        )
+        if (!response.ok) {
+          throw new Error('Failed to fetch inspections')
+        }
+        const data: Mission[] = await response.json()
+        const numberOfMissions = data.length
+
+        const transformedData: MissionData[] = data.map((inspection) => ({
+          id: inspection['mission-details'].id,
+          mission_title: inspection['mission-details'].mission_title,
+          created_at: inspection['mission-details'].created_at,
+        }))
+
+        setInspections(transformedData)
+        setLoading(false)
+      } catch (error) {
+        if (error instanceof Error) {
+          setError(error.message)
+        } else {
+          setError('An unknown error occurred')
+        }
+        setLoading(false)
+      }
+    }
+
+    fetchInspections()
+  }, [])
+
+  // if (error) {
+  //   return <p>Error: {error}</p>
+  // }
+
+  const columns = [
+    {
+      header: 'ID',
+      accessorKey: 'id',
+      cell: (info: any) => (
+        <Link to={`/inspections/${info.row.original.id}`}>
+          {info.row.original.id}
+        </Link>
+      ),
+    },
+
+    {
+      header: 'Mission Title',
+      accessorKey: 'mission_title',
+    },
+    {
+      header: 'Created At',
+      accessorKey: 'created_at',
+    },
+  ]
+
   return (
     <Layout>
-      {/* ===== Top Heading ===== */}
       <LayoutHeader>
         <Search />
         <div className='ml-auto flex items-center space-x-4'>
@@ -29,16 +95,17 @@ export default function Inspections() {
           </div>
         </div>
         <div className='-mx-4 flex-1 overflow-auto px-4 py-1 lg:flex-row lg:space-x-12 lg:space-y-0'>
-          <DataTable data={inspections} columns={columns} />
-          <ul>
-            {inspections.map((inspection) => (
-              <li key={inspection.id}>
-                <Link to={`/inspections/${inspection.id}`}>{inspection.id}</Link>
-              </li>
-            ))}
-          </ul>
+          {loading ? (
+            <DataTableSkeleton
+              columns={columns}
+              data={inspections}
+              loading={loading}
+            />
+          ) : (
+            <DataTable columns={columns} data={inspections} />
+          )}
         </div>
       </LayoutBody>
-    </Layout >
+    </Layout>
   )
 }

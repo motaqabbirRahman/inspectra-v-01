@@ -1,0 +1,77 @@
+// src/types.ts
+
+export interface VideoUrls {
+  cameraMain: string
+  cameraSecondary1: string
+  cameraSecondary2: string
+  enhancedMain: string
+  enhancedSecondary1: string
+  enhancedSecondary2: string
+}
+
+export interface Mission {
+  'mission-details': {
+    id: number
+    customer: number
+    mission_title: string
+    mission_slug: string
+    created_at: string
+  }
+  videos: Array<{
+    id: number
+    mission: number
+    normal_video_url: string
+    enhanced_video_url: string
+    detection_video_url: string
+    sonar_video_url: string | null
+    heat_map_video_url: string | null
+    created_at: string
+  }>
+  images: Array<{
+    id: number
+    mission: number
+    image_url: string
+    created_at: string
+  }>
+}
+
+export interface Video {
+  id: number
+  mission: number
+  normal_video_url: string
+  enhanced_video_url: string
+  detection_video_url: string
+  sonar_video_url: string | null
+  heat_map_video_url: string | null
+  created_at: string
+}
+
+export interface Image {
+  id: number
+  mission: number
+  image_url: string
+  created_at: string
+}
+
+export interface Telemetry {
+  id: number
+  created_at: string
+  roll: number
+  pitch: number
+  yaw: number
+  depth: number
+  temperature: number
+  pressure: number
+  battery: number
+  gain: number
+  mission_time: string
+  mission: number
+}
+
+export interface MissionData {
+  id: number
+  mission_title: string
+  created_at: string
+  status?: string
+  priority?: string
+}

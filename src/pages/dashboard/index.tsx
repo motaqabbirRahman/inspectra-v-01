@@ -12,9 +12,9 @@ import ThemeSwitch from '@/components/theme-switch'
 import { TopNav } from '@/components/top-nav'
 import { UserNav } from '@/components/user-nav'
 import { Layout, LayoutBody, LayoutHeader } from '@/components/custom/layout'
-import { RecentSales } from './components/recent-sales'
+import { RecentMissions } from './components/recent-mission'
 import { Overview } from './components/overview'
-import DepthIcon from '@/icons/depth-icon';
+import DepthIcon from '@/icons/depth-icon'
 
 export default function Dashboard() {
   return (
@@ -22,24 +22,17 @@ export default function Dashboard() {
       <Layout>
         {/* ===== Top Heading ===== */}
         <LayoutHeader>
-          <TopNav links={topNav} />
+          {/* <TopNav links={topNav} /> */}
+          <h1 className='text-2xl font-bold tracking-tight md:text-3xl'>
+            Dashboard
+          </h1>
           <div className='ml-auto flex items-center space-x-4'>
-            <Search />
             <ThemeSwitch />
             <UserNav />
           </div>
         </LayoutHeader>
-
         {/* ===== Main ===== */}
         <LayoutBody className='space-y-4'>
-          <div className='flex items-center justify-between space-y-2'>
-            <h1 className='text-2xl font-bold tracking-tight md:text-3xl'>
-              Dashboard
-            </h1>
-            <div className='flex items-center space-x-2'>
-              <Button>Download</Button>
-            </div>
-          </div>
           <Tabs
             orientation='vertical'
             defaultValue='overview'
@@ -70,12 +63,12 @@ export default function Dashboard() {
                       strokeWidth='2'
                       className='h-4 w-4 text-muted-foreground'
                     >
-                      <path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2" />
-                      <path d="M15 2H9a1 1 0 00-1 1v2a1 1 0 001 1h6a1 1 0 001-1V3a1 1 0 00-1-1z" />
-                      <path d="M12 11h4" />
-                      <path d="M12 16h4" />
-                      <path d="M8 11h.01" />
-                      <path d="M8 16h.01" />
+                      <path d='M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2' />
+                      <path d='M15 2H9a1 1 0 00-1 1v2a1 1 0 001 1h6a1 1 0 001-1V3a1 1 0 00-1-1z' />
+                      <path d='M12 11h4' />
+                      <path d='M12 16h4' />
+                      <path d='M8 11h.01' />
+                      <path d='M8 16h.01' />
                     </svg>
                   </CardHeader>
                   <CardContent>
@@ -100,9 +93,9 @@ export default function Dashboard() {
                       strokeWidth='2'
                       className='h-4 w-4 text-muted-foreground'
                     >
-                      <path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2" />
-                      <path d="M15 2H9a1 1 0 00-1 1v2a1 1 0 001 1h6a1 1 0 001-1V3a1 1 0 00-1-1z" />
-                      <path d="M9 13l2 2 4-4" />
+                      <path d='M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2' />
+                      <path d='M15 2H9a1 1 0 00-1 1v2a1 1 0 001 1h6a1 1 0 001-1V3a1 1 0 00-1-1z' />
+                      <path d='M9 13l2 2 4-4' />
                     </svg>
                   </CardHeader>
                   <CardContent>
@@ -114,7 +107,9 @@ export default function Dashboard() {
                 </Card>
                 <Card>
                   <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-                    <CardTitle className='text-sm font-medium'>Ongoing Inspections</CardTitle>
+                    <CardTitle className='text-sm font-medium'>
+                      Ongoing Inspections
+                    </CardTitle>
                     <svg
                       xmlns='http://www.w3.org/2000/svg'
                       viewBox='0 0 24 24'
@@ -125,10 +120,10 @@ export default function Dashboard() {
                       strokeWidth='2'
                       className='h-4 w-4 text-muted-foreground'
                     >
-                      <path d="M16 4h2a2 2 0 012 2v4M8 4H6a2 2 0 00-2 2v14a2 2 0 002 2h12a2 2 0 002-2v-2" />
-                      <rect x="8" y="2" width="8" height="4" rx="1" ry="1" />
-                      <path d="M21 14H11" />
-                      <path d="M15 10l-4 4 4 4" />
+                      <path d='M16 4h2a2 2 0 012 2v4M8 4H6a2 2 0 00-2 2v14a2 2 0 002 2h12a2 2 0 002-2v-2' />
+                      <rect x='8' y='2' width='8' height='4' rx='1' ry='1' />
+                      <path d='M21 14H11' />
+                      <path d='M15 10l-4 4 4 4' />
                     </svg>
                   </CardHeader>
                   <CardContent>
@@ -177,11 +172,11 @@ export default function Dashboard() {
                   <CardHeader>
                     <CardTitle>Recent Reports</CardTitle>
                     <CardDescription>
-                      You Generated Reports this month.
+                      Generated Reports this month.
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <RecentSales />
+                    <RecentMissions />
                   </CardContent>
                 </Card>
               </div>
@@ -192,26 +187,3 @@ export default function Dashboard() {
     </>
   )
 }
-
-const topNav = [
-  {
-    title: 'Overview',
-    href: 'dashboard/overview',
-    isActive: true,
-  },
-  {
-    title: 'Reports',
-    href: 'dashboard/report',
-    isActive: false,
-  },
-  {
-    title: 'Logs',
-    href: 'dashboard/logs',
-    isActive: false,
-  },
-  {
-    title: 'Settings',
-    href: '/settings',
-    isActive: false,
-  },
-]

@@ -1,5 +1,4 @@
-
-import * as React from 'react';
+import React from 'react'
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -8,13 +7,12 @@ import {
   flexRender,
   getCoreRowModel,
   getFacetedRowModel,
-  getFacetedUniqueValues,
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
-} from '@tanstack/react-table';
-import { Link } from 'react-router-dom';
+} from '@tanstack/react-table'
+import { Link, useNavigate } from 'react-router-dom'
 
 import {
   Table,
@@ -23,29 +21,33 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
-
-import { DataTablePagination } from './data-table-pagination';
-import { DataTableToolbar } from './data-table-toolbar';
+} from '@/components/ui/table'
+import { DataTablePagination } from './data-table-pagination'
+import { DataTableToolbar } from './data-table-toolbar'
 
 interface InspectionData {
-  id: string;
-  title: string;
-  status: string;
-  label: string;
-  priority: string;
+  id: number
+  mission_title: string
+  created_at: string
 }
 
 interface DataTableProps<TData extends InspectionData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
-  data: TData[];
+  columns: ColumnDef<TData, TValue>[]
+  data: TData[]
 }
 
-export function DataTable<TData extends InspectionData, TValue>({ columns, data }: DataTableProps<TData, TValue>) {
-  const [rowSelection, setRowSelection] = React.useState({});
-  const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
-  const [sorting, setSorting] = React.useState<SortingState>([]);
+export function DataTable<TData extends InspectionData, TValue>({
+  columns,
+  data,
+}: DataTableProps<TData, TValue>) {
+  const [rowSelection, setRowSelection] = React.useState({})
+  const [columnVisibility, setColumnVisibility] =
+    React.useState<VisibilityState>({})
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
+    []
+  )
+  const [sorting, setSorting] = React.useState<SortingState>([])
+  const navigate = useNavigate()
 
   const table = useReactTable({
     data,
@@ -66,20 +68,28 @@ export function DataTable<TData extends InspectionData, TValue>({ columns, data 
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFacetedRowModel: getFacetedRowModel(),
-    getFacetedUniqueValues: getFacetedUniqueValues(),
-  });
+  })
+
+  const handleRowClick = (id: number) => {
+    navigate(`/inspections/${id}`)
+  }
 
   return (
-    <div className="space-y-4">
+    <div className='space-y-3'>
       <DataTableToolbar table={table} />
-      <div className="rounded-md border">
+      <div className='rounded-md border'>
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
                   <TableHead key={header.id} colSpan={header.colSpan}>
-                    {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
                   </TableHead>
                 ))}
               </TableRow>
@@ -88,15 +98,17 @@ export function DataTable<TData extends InspectionData, TValue>({ columns, data 
           <TableBody>
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
-                <TableRow key={row.id} data-state={row.getIsSelected() && 'selected'}>
+                <TableRow
+                  key={row.id}
+                  data-state={row.getIsSelected() && 'selected'}
+                  onClick={() => handleRowClick(row.original.id)}
+                  className='cursor-pointer'
+                >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
-                      {cell.column.id === 'title' ? (
-                        <Link to={`/inspections/${row.original.id}`}>
-                          {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                        </Link>
-                      ) : (
-                        flexRender(cell.column.columnDef.cell, cell.getContext())
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
                       )}
                     </TableCell>
                   ))}
@@ -104,7 +116,10 @@ export function DataTable<TData extends InspectionData, TValue>({ columns, data 
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={columns.length} className="h-24 text-center">
+                <TableCell
+                  colSpan={columns.length}
+                  className='h-24 text-center'
+                >
                   No results.
                 </TableCell>
               </TableRow>
@@ -114,6 +129,5 @@ export function DataTable<TData extends InspectionData, TValue>({ columns, data 
       </div>
       <DataTablePagination table={table} />
     </div>
-  );
+  )
 }
-

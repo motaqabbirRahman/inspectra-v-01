@@ -47,11 +47,27 @@ export default function Sidebar2({
               viewBox='0 0 256 256'
               className={`transition-all ${isCollapsed ? 'h-6 w-6' : 'h-8 w-8'}`}
             >
-              <rect x="30" y="100" width="50" height="156" fill="currentColor"></rect>
-
-              <rect x="90" y="20" width="50" height="256" fill="currentColor"></rect>
-
-              <rect x="150" y="140" width="50" height="116" fill="currentColor"></rect>
+              <rect
+                x='30'
+                y='100'
+                width='50'
+                height='156'
+                fill='currentColor'
+              ></rect>
+              <rect
+                x='90'
+                y='20'
+                width='50'
+                height='256'
+                fill='currentColor'
+              ></rect>
+              <rect
+                x='150'
+                y='140'
+                width='50'
+                height='116'
+                fill='currentColor'
+              ></rect>
             </svg>
             <div
               className={`flex flex-col justify-end truncate ${isCollapsed ? 'invisible w-0' : 'visible w-auto'}`}

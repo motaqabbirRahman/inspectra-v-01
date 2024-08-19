@@ -1,53 +1,62 @@
-import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from 'recharts'
+import {
+  Bar,
+  BarChart,
+  ResponsiveContainer,
+  XAxis,
+  YAxis,
+  Tooltip,
+  Legend,
+} from 'recharts'
 
+// Sample data reflecting the number of missions
 const data = [
   {
     name: 'Jan',
-    total: Math.floor(Math.random() * 5000) + 1000,
+    missions: Math.floor(Math.random() * 100) + 20,
   },
   {
     name: 'Feb',
-    total: Math.floor(Math.random() * 5000) + 1000,
+    missions: Math.floor(Math.random() * 100) + 20,
   },
   {
     name: 'Mar',
-    total: Math.floor(Math.random() * 5000) + 1000,
+    missions: Math.floor(Math.random() * 100) + 20,
   },
   {
     name: 'Apr',
-    total: Math.floor(Math.random() * 5000) + 1000,
+    missions: Math.floor(Math.random() * 100) + 20,
   },
   {
     name: 'May',
-    total: Math.floor(Math.random() * 5000) + 1000,
+    missions: Math.floor(Math.random() * 100) + 20,
   },
   {
     name: 'Jun',
-    total: Math.floor(Math.random() * 5000) + 1000,
+    missions: Math.floor(Math.random() * 100) + 20,
   },
   {
     name: 'Jul',
-    total: Math.floor(Math.random() * 5000) + 1000,
+    missions: Math.floor(Math.random() * 100) + 20,
   },
   {
     name: 'Aug',
-    total: Math.floor(Math.random() * 5000) + 1000,
+    missions: Math.floor(Math.random() * 100) + 20,
   },
   {
     name: 'Sep',
-    total: Math.floor(Math.random() * 5000) + 1000,
+    missions: Math.floor(Math.random() * 100) + 20,
   },
   {
     name: 'Oct',
-    total: Math.floor(Math.random() * 5000) + 1000,
+    missions: Math.floor(Math.random() * 100) + 20,
   },
   {
     name: 'Nov',
-    total: Math.floor(Math.random() * 5000) + 1000,
+    missions: Math.floor(Math.random() * 100) + 20,
   },
   {
     name: 'Dec',
-    total: Math.floor(Math.random() * 5000) + 1000,
+    missions: Math.floor(Math.random() * 100) + 20,
   },
 ]
 
@@ -67,13 +76,13 @@ export function Overview() {
           fontSize={12}
           tickLine={false}
           axisLine={false}
-          tickFormatter={(value) => `$${value}`}
         />
+        {/* <Tooltip formatter={(value) => `${value} missions`} /> */}
+        <Legend />
         <Bar
-          dataKey='total'
-          fill='currentColor'
+          dataKey='missions'
+          fill='#007aff' // Blue
           radius={[4, 4, 0, 0]}
-          className='fill-primary'
         />
       </BarChart>
     </ResponsiveContainer>

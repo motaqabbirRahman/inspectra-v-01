@@ -60,13 +60,13 @@ const router = createBrowserRouter([
       {
         path: 'inspections/:inspectionId',
         lazy: async () => ({
-          Component: (await import('@/pages/inspections/details/inspection-details')).default,
+          Component: (await import('@/pages/inspection-details')).default,
         }),
       },
       {
         path: 'inspections/:inspectionId/generate-report',
         lazy: async () => ({
-          Component: (await import('./pages/inspections/generate-report')).default,
+          Component: (await import('./pages/generate-report')).default,
         }),
       },
       {
