@@ -1,8 +1,6 @@
 import React from 'react'
 import { View, Text, Image } from '@react-pdf/renderer'
 import styles from './styles'
-import map from '../../../../../public/static/images/google-map-placeholder.png'
-import logo from '../../../../../public/static/images/user.jpg'
 import tuna from '../../../../../public/static/images/tuna.png'
 import { Mission } from '@/types/types'
 

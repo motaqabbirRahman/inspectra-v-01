@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, StyleSheet } from '@react-pdf/renderer'
+import { View, StyleSheet } from '@react-pdf/renderer'
 import { Header } from './pdf-section'
 
 // Define the DocumentTemplate component

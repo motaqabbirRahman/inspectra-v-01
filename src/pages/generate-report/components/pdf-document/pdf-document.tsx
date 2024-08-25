@@ -1,8 +1,7 @@
 import React from 'react'
-import { Document, Page, View } from '@react-pdf/renderer'
+import { Document, Page } from '@react-pdf/renderer'
 import {
   Header,
-  HeaderImageSection,
   MissionDetailsSection,
   TunaSection,
   OptionsSection,
@@ -11,7 +10,6 @@ import {
 } from './pdf-section'
 import styles from './styles'
 import { Mission } from '@/types/types'
-import DocumentTemplate from './document-template'
 
 interface PdfDocumentProps {
   mission: Mission
@@ -33,9 +31,9 @@ const PdfDocument: React.FC<PdfDocumentProps> = ({
   imageUrls,
 }) => {
   const {
-    mission_title,
+    // mission_title,
     date,
-    location,
+    // location,
     operator,
     start_time,
     end_time,
