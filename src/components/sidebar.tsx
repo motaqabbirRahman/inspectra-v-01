@@ -5,6 +5,7 @@ import { Button } from './custom/button'
 import Nav from './nav'
 import { cn } from '@/lib/utils'
 import { sidelinks } from '@/data/sidelinks'
+import { Separator } from './ui/separator'
 
 interface SidebarProps extends React.HTMLAttributes<HTMLElement> {
   isCollapsed: boolean
@@ -73,7 +74,10 @@ export default function Sidebar2({
               className={`flex flex-col justify-end truncate ${isCollapsed ? 'invisible w-0' : 'visible w-auto'}`}
             >
               <span className='font-medium'>Inspectra Admin</span>
-              <span className='text-xs'>By Dubotech</span>
+              <span className='text-xs text-muted-foreground'>
+                Precision at Depth
+              </span>
+              <div></div>
             </div>
           </div>
 
@@ -91,6 +95,8 @@ export default function Sidebar2({
           </Button>
         </LayoutHeader>
 
+        <Separator className='my-4' />
+
         {/* Navigation links */}
         <Nav
           id='sidebar-menu'
@@ -99,6 +105,22 @@ export default function Sidebar2({
           isCollapsed={isCollapsed}
           links={sidelinks}
         />
+
+        {/*Footer*/}
+        <div className={`p-4 ${isCollapsed ? 'text-center' : ''}`}>
+          {!isCollapsed && (
+            <div className='text-center'>
+              <span className=' text-xs font-medium text-muted-foreground'></span>
+            </div>
+          )}
+
+          <img
+            src='https://ik.imagekit.io/dubotech/assets/img/logo-white-c.png?updatedAt=1719836340591'
+            alt='Dubotech Logo'
+            className={`transition-all ${isCollapsed ? 'mx-auto h-8 w-[24px]' : 'mx-auto h-12 w-auto'}`}
+            style={{ aspectRatio: '3 / 1', objectFit: 'contain' }}
+          />
+        </div>
 
         {/* Scrollbar width toggle button */}
         <Button

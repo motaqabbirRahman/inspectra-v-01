@@ -42,6 +42,7 @@ const InspectionDetails = () => {
     <Layout>
       <LayoutHeader>
         {/* <TopNav links={topNavData} /> */}
+
         <BreadCrumb />
         <div className='ml-auto flex items-center space-x-4'>
           <ThemeSwitch />
@@ -81,11 +82,11 @@ const InspectionDetails = () => {
 
           {/* Common Layout with Dynamic Main Video Player */}
           <div className='space-y-3'>
-            <div className='grid gap-2 lg:grid-cols-3 lg:grid-rows-2'>
+            <div className='grid gap-2 xl:grid-cols-3 xl:grid-rows-2'>
               {loading ? (
-                <Skeleton className='log:row-span-1 bg-muted lg:col-span-2' />
+                <Skeleton className='log:row-span-1 bg-muted xl:col-span-2' />
               ) : (
-                <div className='relative lg:col-span-2 lg:row-span-1'>
+                <div className='relative xl:col-span-2 xl:row-span-1'>
                   <TabsList className='absolute left-0 top-0 z-10 m-2 bg-zinc-900 bg-opacity-80 backdrop-blur-sm'>
                     <TabsTrigger value='camera'>Camera View</TabsTrigger>
                     <TabsTrigger value='enhanced'>Enhanced View</TabsTrigger>
@@ -116,16 +117,14 @@ const InspectionDetails = () => {
                 </div>
               )}
               {/* RightSideBar */}
-              <div className='lg:col-start-3 lg:row-span-2'>
+              <div className='xl:col-start-3 xl:row-span-2'>
                 <RightSideBar />
               </div>
-              {/* The two cards in column 2, starting from row 2 */}
-              <div className='lg:col-span-2 lg:row-start-2'>
-                <div className='lg:flex lg:space-x-4'>
-                  {/* Map and Data section */}
-                  <div className='flex flex-col lg:flex-1'>
+              <div className='xl:col-span-2 xl:row-start-2'>
+                <div className='lg:space-x-4 xl:flex'>
+                  <div className='flex flex-col xl:flex-1'>
                     <Card className='grid flex-1 gap-0 lg:grid-cols-6'>
-                      <div className='m-3 flex lg:col-span-4'>
+                      <div className='m-3 flex xl:col-span-4'>
                         <AspectRatio ratio={16 / 9}>
                           <img
                             src={map}
@@ -134,11 +133,12 @@ const InspectionDetails = () => {
                           />
                         </AspectRatio>
                       </div>
+
                       <div className='m-2 flex flex-col justify-center rounded-lg lg:col-span-2'>
                         <div className='flex justify-start'>
                           <h2 className='font-semibold'>Realtime View</h2>
                         </div>
-                        <div className='flex flex-col'>
+                        <div className='grid gap-3'>
                           <DataCard
                             icon={ArrowDownNarrowWide}
                             label='Depth'
@@ -162,8 +162,8 @@ const InspectionDetails = () => {
                     </Card>
                   </div>
 
-                  {/* Video Player section */}
-                  <div className='flex flex-col lg:flex-1'>
+                  {/*Sonar Section */}
+                  <div className='flex flex-col xl:flex-1'>
                     {loading ? (
                       <Skeleton className='h-full w-full bg-muted' />
                     ) : (

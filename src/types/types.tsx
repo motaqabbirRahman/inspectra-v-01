@@ -16,6 +16,17 @@ export interface Mission {
     mission_title: string
     mission_slug: string
     created_at: string
+    date: number
+    location: string
+    operator: string
+    start_time: number
+    end_time: number
+    duration: number
+    min_temp: number
+    max_temp: number
+    min_depth: number
+    max_depth: number
+    gps_coordinates: string
   }
   videos: Array<{
     id: number
@@ -74,4 +85,15 @@ export interface MissionData {
   created_at: string
   status?: string
   priority?: string
+}
+
+export interface OptionsType {
+  model: string
+  numImages: number
+  includeRoverData: string
+  charts: string[]
+  comment: string
+  detectionType: string[]
+  minAccuracy: number
+  includeImageDimension: boolean
 }

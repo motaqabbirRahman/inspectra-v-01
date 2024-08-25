@@ -13,6 +13,7 @@ import { Radio } from 'lucide-react'
 import SpeedAltChart from './speed-alt-chart'
 import { BatteryFull } from 'lucide-react'
 import tuna from '../../../../public/static/images/tuna.png'
+import Scene from './model-viewer'
 
 export function RightSideBar() {
   return (
@@ -36,15 +37,15 @@ export function RightSideBar() {
       </CardHeader>
       <CardContent className='p-6 text-sm'>
         <div className='grid gap-3'>
-          {/* <AspectRatio ratio={16 / 9}>
-            <ModelViewer
+          <AspectRatio ratio={16 / 9}>
+            <Scene
               modelPath='../../../../../public/models/tuna.obj'
-              mtlPath='../../../../../public/models/tpro.mtl'
+              mtlPath='../../../../../public/models/tuna.mtl'
             />
-          </AspectRatio> */}
-          <AspectRatio ratio={19 / 12}>
-            <img src={tuna} alt='tuna' className='ml-9' />
           </AspectRatio>
+          {/* <AspectRatio ratio={19 / 12}>
+            <img src={tuna} alt='tuna' className='ml-9' />
+          </AspectRatio> */}
           {/* <AspectRatio ratio={16 / 9}>
             <ReactPlayer
               url='https://ik.imagekit.io/dubotech/assets/video/tuna_3.mp4?updatedAt=1720009687770'
