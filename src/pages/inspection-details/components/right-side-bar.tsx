@@ -37,10 +37,7 @@ export function RightSideBar() {
       <CardContent className='p-6 text-sm'>
         <div className='grid gap-3'>
           <AspectRatio ratio={16 / 9}>
-            <Scene
-              modelPath='../../../../../public/models/tuna.obj'
-              mtlPath='../../../../../public/models/tuna.mtl'
-            />
+            <Scene modelPath='/models/tuna.obj' mtlPath='/models/tuna.mtl' />
           </AspectRatio>
           {/* <AspectRatio ratio={19 / 12}>
             <img src={tuna} alt='tuna' className='ml-9' />
