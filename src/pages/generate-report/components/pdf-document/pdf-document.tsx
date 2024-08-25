@@ -2,6 +2,7 @@ import React from 'react'
 import { Document, Page } from '@react-pdf/renderer'
 import {
   Header,
+  TitlePage,
   MissionDetailsSection,
   TunaSection,
   OptionsSection,
@@ -55,6 +56,7 @@ const PdfDocument: React.FC<PdfDocumentProps> = ({
       {/* Mission Details Page */}
       <Page style={styles.detailsPage}>
         <Header />
+        <TitlePage />
 
         <MissionDetailsSection
           date={String(date)}
