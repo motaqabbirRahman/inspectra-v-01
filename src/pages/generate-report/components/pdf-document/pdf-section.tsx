@@ -3,6 +3,7 @@ import { View, Text, Image } from '@react-pdf/renderer'
 import styles from './styles'
 import tuna from '../../../../../public/static/images/tuna.png'
 import { Mission } from '@/types/types'
+import dubotech from '@/../public/static/images/dubotech.jpg'
 
 interface MissionDetailsSectionProps {
   date: string
@@ -35,6 +36,12 @@ interface PdfDocumentProps {
 const Header: React.FC = () => (
   <View style={styles.header} fixed>
     <Text style={styles.text}>Inspectra Dive Report</Text>
+  </View>
+)
+
+const TitlePage: React.FC = () => (
+  <View style={styles.imageWrapper}>
+    <Image src={dubotech} style={styles.image} />
   </View>
 )
 
@@ -189,6 +196,7 @@ const ObservationsSection: React.FC<ObservationsSectionProps> = ({
 export {
   Header,
   HeaderImageSection,
+  TitlePage,
   TunaSection,
   OptionsSection,
   MissionDetailsSection,
