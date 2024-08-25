@@ -12,7 +12,6 @@ import { AspectRatio } from '@radix-ui/react-aspect-ratio'
 import { Radio } from 'lucide-react'
 import SpeedAltChart from './speed-alt-chart'
 import { BatteryFull } from 'lucide-react'
-import tuna from '../../../../public/static/images/tuna.png'
 import Scene from './model-viewer'
 
 export function RightSideBar() {
