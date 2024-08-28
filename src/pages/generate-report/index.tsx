@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useParams, useLocation } from 'react-router-dom'
 import { PDFDownloadLink, PDFViewer } from '@react-pdf/renderer'
 import { Layout, LayoutHeader, LayoutBody } from '@/components/custom/layout'
@@ -34,7 +34,7 @@ const GenerateReport = () => {
   const [initialOptions, setInitialOptions] = useState<OptionsType>(options)
   const [pdfData, setPdfData] = useState<React.ReactElement | null>(null)
   const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true)
-  const [isPdfLoading, setIsPdfLoading] = useState<boolean>(true)
+  const [isPdfLoading, setIsPdfLoading] = useState<boolean>(true) // Properly using isPdfLoading
 
   // Fetch mission data
   useEffect(() => {
@@ -213,8 +213,8 @@ const GenerateReport = () => {
             currentOptions={options}
           />
           <Card className='space-y-2'>
-            {/* {isPdfLoading ? (
-              <Skeleton className='rounded-lg'>
+            {isPdfLoading ? ( // Use isPdfLoading to show loading state
+              <Skeleton className='h-full rounded-lg'>
                 <Badge variant='outline'>Loading PDF...</Badge>
               </Skeleton>
             ) : (
@@ -223,15 +223,6 @@ const GenerateReport = () => {
                   {pdfData}
                 </PDFViewer>
               )
-            )} */}
-            {pdfData ? (
-              <PDFViewer width='100%' height='100%' className='rounded-lg'>
-                {pdfData}
-              </PDFViewer>
-            ) : (
-              <Skeleton className='h-100% rounded-lg '>
-                <Badge variant='outline'>PDF Viewer</Badge>
-              </Skeleton>
             )}
           </Card>
         </div>

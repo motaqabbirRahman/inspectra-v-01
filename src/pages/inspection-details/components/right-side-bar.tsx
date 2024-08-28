@@ -7,11 +7,9 @@ import {
   CardDescription,
   CardHeader,
 } from '@/components/ui/card'
-import { Button } from '@/components/custom/button'
 import { AspectRatio } from '@radix-ui/react-aspect-ratio'
 import { IoBatteryFull } from 'react-icons/io5'
 import { AiOutlineThunderbolt } from 'react-icons/ai'
-import { Radio } from 'lucide-react'
 import Scene from './model-viewer'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import TimeDepthChart from './time-depth-chart'
