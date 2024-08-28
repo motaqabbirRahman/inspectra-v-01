@@ -213,7 +213,7 @@ const GenerateReport = () => {
             currentOptions={options}
           />
           <Card className='space-y-2'>
-            {isPdfLoading ? (
+            {/* {isPdfLoading ? (
               <Skeleton className='rounded-lg'>
                 <Badge variant='outline'>Loading PDF...</Badge>
               </Skeleton>
@@ -223,8 +223,8 @@ const GenerateReport = () => {
                   {pdfData}
                 </PDFViewer>
               )
-            )}
-            {/* {pdfData ? (
+            )} */}
+            {pdfData ? (
               <PDFViewer width='100%' height='100%' className='rounded-lg'>
                 {pdfData}
               </PDFViewer>
@@ -232,7 +232,7 @@ const GenerateReport = () => {
               <Skeleton className='h-100% rounded-lg '>
                 <Badge variant='outline'>PDF Viewer</Badge>
               </Skeleton>
-            )} */}
+            )}
           </Card>
         </div>
       </LayoutBody>

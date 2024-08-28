@@ -1,5 +1,5 @@
 import React from 'react'
-import { Document, Page } from '@react-pdf/renderer'
+import { Document, Page, Text } from '@react-pdf/renderer'
 import {
   Watermark,
   Header,
@@ -9,10 +9,12 @@ import {
   OptionsSection,
   DetectionImagesSection,
   ObservationsSection,
+  ChartsSection,
 } from './pdf-section'
 import styles from './styles'
 import { Mission } from '@/types/types'
 
+// Define the type for chartsData with keys matching your data
 interface PdfDocumentProps {
   mission: Mission
   imageUrls: string[]
@@ -21,13 +23,13 @@ interface PdfDocumentProps {
     numImages: number
     includeRoverData: string
     detectionType: string[]
-    charts: string[]
+    charts: string[] // Array of chart types or keys
     comment: string
     minAccuracy: number
     includeImageDimension: boolean
   }
   chartsData: {
-    timeDepth?: string // URL or path to the bar chart image
+    [key: string]: string // URL or path to the chart image
   }
 }
 
@@ -53,7 +55,6 @@ const PdfDocument: React.FC<PdfDocumentProps> = ({
   return (
     <Document>
       <TitlePage missionDetails={mission['mission-details']} />
-
       <Page style={styles.detailsPage}>
         <Header />
         <MissionDetailsSection
@@ -71,17 +72,25 @@ const PdfDocument: React.FC<PdfDocumentProps> = ({
         <RoverInfoSection />
         <OptionsSection options={options} />
       </Page>
+      {/* Render Chart Images */}
+      {/* Render Chart Images */}
+      <Page style={styles.imagesPage}>
+        <Header />
+        {options.charts.length > 0 ? (
+          <ChartsSection chartsData={chartsData} chartTypes={options.charts} />
+        ) : (
+          <Text>No charts data available</Text>
+        )}
+      </Page>
 
       {/* Detection Images Section */}
       {imageUrls.length > 0 && <DetectionImagesSection imageUrls={imageUrls} />}
-
       {/* Observations Page */}
       <Page style={styles.observationsPage}>
         <Watermark />
         <Header />
         <ObservationsSection comments={options.comment} />
       </Page>
-
       {/* Additional Pages if needed */}
       {/* Example: */}
       {/* <Page style={styles.additionalPage}>

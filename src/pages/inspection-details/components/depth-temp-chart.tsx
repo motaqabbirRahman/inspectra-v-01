@@ -15,15 +15,15 @@ import {
 } from '@/components/ui/chart'
 
 const depthTempData = [
-  { depth: 0, temp: 25 },
-  { depth: 5, temp: 24 },
-  { depth: 10, temp: 23 },
-  { depth: 15, temp: 22 },
-  { depth: 20, temp: 21 },
-  { depth: 25, temp: 20 },
-  { depth: 30, temp: 19 },
-  { depth: 35, temp: 18 },
-  { depth: 40, temp: 17 },
+  { depth: 10, temp: 20 },
+  { depth: 9.7, temp: 21 },
+  { depth: 9.3, temp: 22 },
+  { depth: 9.5, temp: 21 },
+  { depth: 9.8, temp: 21 },
+  { depth: 9.9, temp: 21 },
+  { depth: 10, temp: 20 },
+  { depth: 9.8, temp: 21 },
+  { depth: 9.7, temp: 21 },
 ]
 
 const depthTempConfig: ChartConfig = {

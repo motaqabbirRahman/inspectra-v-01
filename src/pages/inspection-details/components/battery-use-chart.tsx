@@ -16,14 +16,14 @@ import {
 
 const batteryData = [
   { time: 0, battery: 100 },
-  { time: 1, battery: 90 },
-  { time: 2, battery: 80 },
-  { time: 3, battery: 70 },
-  { time: 4, battery: 60 },
-  { time: 5, battery: 50 },
-  { time: 6, battery: 40 },
-  { time: 7, battery: 30 },
-  { time: 8, battery: 20 },
+  { time: 1, battery: 98 },
+  { time: 2, battery: 97 },
+  { time: 3, battery: 96 },
+  { time: 4, battery: 95 },
+  { time: 5, battery: 94 },
+  { time: 6, battery: 93 },
+  { time: 7, battery: 93 },
+  { time: 8, battery: 93 },
 ]
 
 const batteryConfig: ChartConfig = {
@@ -57,7 +57,7 @@ export default function BatteryUseChart() {
               axisLine={false}
               tickMargin={8}
               label={{
-                value: 'Time (hours)',
+                value: 'Time (minutes)',
                 position: 'insideBottom',
                 offset: -5,
               }}
@@ -94,7 +94,7 @@ export default function BatteryUseChart() {
               Battery usage is decreasing <BatteryFull className='h-4 w-4' />
             </div>
             <div className='flex items-center gap-2 leading-none text-muted-foreground'>
-              Last 8 hours
+              Last 10 minutes
             </div>
           </div>
         </div>

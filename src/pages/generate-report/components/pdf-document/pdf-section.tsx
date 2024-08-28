@@ -4,7 +4,6 @@ import styles from './styles'
 import tuna from '../../../../../public/static/images/tuna.png'
 import { Mission } from '@/types/types'
 import DubotechLogo from '@/../public/static/images/dt-black.png'
-
 import { Font } from '@react-pdf/renderer'
 
 interface RoverInfo {
@@ -307,6 +306,68 @@ const DetectionImagesSection: React.FC<DetectionImagesSectionProps> = ({
 }
 export default DetectionImagesSection
 
+interface ChartsSectionProps {
+  chartsData: { [key: string]: string } // Chart URLs or paths
+  chartTypes: string[] // Array of chart keys
+}
+
+const ChartsSection: React.FC<ChartsSectionProps> = ({
+  chartsData,
+  chartTypes,
+}) => {
+  const chartsPerPage = 2
+
+  const getChartPages = () => {
+    const pages: string[][] = []
+    for (let i = 0; i < chartTypes.length; i += chartsPerPage) {
+      pages.push(chartTypes.slice(i, i + chartsPerPage))
+    }
+    return pages
+  }
+
+  const chartPages = getChartPages()
+  const mapChartOptionsToData = (chartOption: string): string => {
+    switch (chartOption) {
+      case 'time-depth':
+        return 'timeDepth'
+      case 'depth-temperature':
+        return 'depthTemperature'
+      case 'battery-usage':
+        return 'batteryUsage'
+      default:
+        return ''
+    }
+  }
+
+  return (
+    <>
+      {chartPages.map((pageChartTypes, pageIndex) => (
+        <View>
+          <View style={styles.chartSection}>
+            <Text style={styles.subtitle}>Charts</Text>
+            {pageChartTypes.map((chartType, index) => {
+              const chartKey = mapChartOptionsToData(chartType)
+              const chartImage = chartsData[chartKey]
+              return chartImage ? (
+                <View key={index} style={styles.imageWrapper}>
+                  <Image src={chartImage} style={styles.image} />
+                </View>
+              ) : (
+                <Text key={index}>Chart for {chartType} not available</Text>
+              )
+            })}
+          </View>
+          <View style={styles.footer}>
+            <Text>
+              Page {pageIndex + 1} of {chartPages.length}
+            </Text>
+          </View>
+        </View>
+      ))}
+    </>
+  )
+}
+
 interface ObservationsSectionProps {
   comments: string
 }
@@ -334,5 +395,6 @@ export {
   RoverInfoSection,
   OptionsSection,
   DetectionImagesSection,
+  ChartsSection,
   ObservationsSection,
 }
