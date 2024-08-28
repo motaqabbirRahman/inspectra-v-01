@@ -1,100 +1,39 @@
 import { useRef, useEffect } from 'react'
 import { Canvas, useLoader } from '@react-three/fiber'
-import { OrbitControls, Environment, Text } from '@react-three/drei'
-import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js'
-import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader.js'
+import { OrbitControls, Environment } from '@react-three/drei'
+import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader'
+import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader'
 import * as THREE from 'three'
 
-// Dummy rotation data array
-const rotationDataArray = [
-  { roll: 0, pitch: 0, yaw: 0 },
-  { roll: Math.PI / 4, pitch: 0, yaw: 0 },
-  { roll: Math.PI / 2, pitch: 0, yaw: 0 },
-  { roll: Math.PI, pitch: 0, yaw: 0 },
-  { roll: -Math.PI / 2, pitch: 0, yaw: 0 },
-  { roll: -Math.PI / 4, pitch: 0, yaw: 0 },
-  { roll: 0, pitch: 0, yaw: 0 },
-  { roll: Math.PI / 4, pitch: 0, yaw: Math.PI / 4 },
-  { roll: Math.PI / 2, pitch: Math.PI / 4, yaw: Math.PI / 2 },
-  { roll: Math.PI, pitch: Math.PI / 2, yaw: Math.PI },
-  { roll: -Math.PI, pitch: -Math.PI / 2, yaw: -Math.PI },
-  { roll: Math.PI / 4, pitch: Math.PI / 4, yaw: 0 },
-  { roll: Math.PI / 2, pitch: Math.PI / 4, yaw: Math.PI / 4 },
-  { roll: Math.PI, pitch: Math.PI / 4, yaw: Math.PI / 2 },
-  { roll: -Math.PI / 4, pitch: Math.PI / 4, yaw: -Math.PI / 4 },
-  { roll: -Math.PI / 2, pitch: Math.PI / 4, yaw: -Math.PI / 2 },
-  { roll: -Math.PI, pitch: Math.PI / 4, yaw: -Math.PI },
-  { roll: -Math.PI / 4, pitch: -Math.PI / 4, yaw: 0 },
-  { roll: -Math.PI / 2, pitch: -Math.PI / 4, yaw: Math.PI / 4 },
-  { roll: -Math.PI, pitch: -Math.PI / 4, yaw: Math.PI / 2 },
-  { roll: -Math.PI / 4, pitch: -Math.PI / 4, yaw: -Math.PI / 4 },
-  { roll: 0, pitch: -Math.PI / 2, yaw: 0 },
-  { roll: Math.PI / 4, pitch: -Math.PI / 2, yaw: Math.PI / 4 },
-  { roll: Math.PI / 2, pitch: -Math.PI / 2, yaw: Math.PI / 2 },
-  { roll: Math.PI, pitch: -Math.PI / 2, yaw: Math.PI },
-  { roll: -Math.PI / 2, pitch: -Math.PI / 2, yaw: -Math.PI / 2 },
-  { roll: -Math.PI, pitch: -Math.PI / 2, yaw: -Math.PI },
-  { roll: 0, pitch: Math.PI / 2, yaw: 0 },
-  { roll: Math.PI / 4, pitch: Math.PI / 2, yaw: Math.PI / 4 },
-  { roll: Math.PI / 2, pitch: Math.PI / 2, yaw: Math.PI / 2 },
-  { roll: Math.PI, pitch: Math.PI / 2, yaw: Math.PI },
-  { roll: -Math.PI / 2, pitch: Math.PI / 2, yaw: -Math.PI / 2 },
-  { roll: -Math.PI, pitch: Math.PI / 2, yaw: -Math.PI },
+const positions = [
+  {
+    position: new THREE.Vector3(-10, 0, 0),
+    rotation: new THREE.Euler(Math.PI / 2, Math.PI, Math.PI / 2), // Roll, pitch, yaw
+  }, // Left side view
+  {
+    position: new THREE.Vector3(0, 0, 10),
+    rotation: new THREE.Euler(Math.PI / 2, Math.PI, 0), // Roll, pitch, yaw
+  }, // front view
+  {
+    position: new THREE.Vector3(10, 0, 0),
+    rotation: new THREE.Euler(Math.PI / 2, Math.PI, Math.PI / 2), // Roll, pitch, yaw
+  }, // Right side view
+  {
+    position: new THREE.Vector3(0, 0, 10),
+    rotation: new THREE.Euler(Math.PI / 2, Math.PI, 0), // Roll, pitch, yaw
+  }, // front view
 ]
 
 interface SceneProps {
   modelPath: string
   mtlPath: string
+  isPlaying: boolean
 }
 
-function Compass() {
-  return (
-    <group>
-      {/* North */}
-      <Text
-        position={[0, 2, 0]}
-        rotation={[Math.PI / 2, 0, 0]}
-        fontSize={0.5}
-        color='black'
-      >
-        N
-      </Text>
-      {/* East */}
-      <Text
-        position={[2, 0, 0]}
-        rotation={[Math.PI / 2, Math.PI / 2, 0]}
-        fontSize={0.5}
-        color='black'
-      >
-        E
-      </Text>
-      {/* South */}
-      <Text
-        position={[0, -2, 0]}
-        rotation={[Math.PI / 2, Math.PI, 0]}
-        fontSize={0.5}
-        color='black'
-      >
-        S
-      </Text>
-      {/* West */}
-      <Text
-        position={[-2, 0, 0]}
-        rotation={[Math.PI / 2, -Math.PI / 2, 0]}
-        fontSize={0.5}
-        color='black'
-      >
-        W
-      </Text>
-    </group>
-  )
-}
+export default function Scene({ modelPath, mtlPath, isPlaying }: SceneProps) {
+  const ref = useRef<THREE.Object3D | null>(null)
+  const startTime = useRef(Date.now())
 
-export default function Scene({ modelPath, mtlPath }: SceneProps) {
-  const ref = useRef<THREE.Object3D>(null)
-  const dataIndex = useRef(0) // To keep track of the current data index
-
-  // Load materials and model
   const materials = useLoader(MTLLoader, mtlPath)
   const obj = useLoader(OBJLoader, modelPath, (loader) => {
     materials.preload()
@@ -102,45 +41,50 @@ export default function Scene({ modelPath, mtlPath }: SceneProps) {
   })
 
   useEffect(() => {
-    let startTime = Date.now()
+    let animationFrameId: number
 
     const animate = () => {
-      const elapsed = (Date.now() - startTime) / 1000
-      const data =
-        rotationDataArray[dataIndex.current % rotationDataArray.length]
-
       if (ref.current) {
-        // Apply roll, pitch, and yaw to the model
-        ref.current.rotation.set(data.pitch, data.yaw, data.roll)
-      }
+        const elapsed = (Date.now() - startTime.current) / 1000
+        const index = Math.floor(elapsed / 10) % positions.length
+        const target = positions[index]
 
-      // Update the index to move to the next data point
-      if (elapsed > 2) {
-        // Change data every 2 seconds
-        dataIndex.current = (dataIndex.current + 1) % rotationDataArray.length
-        startTime = Date.now() // Reset the timer
-      }
+        if (ref.current) {
+          ref.current.position.lerp(target.position, 0.1)
+          ref.current.rotation.set(
+            THREE.MathUtils.lerp(
+              ref.current.rotation.x,
+              target.rotation.x,
+              0.1
+            ),
+            THREE.MathUtils.lerp(
+              ref.current.rotation.y,
+              target.rotation.y,
+              0.1
+            ),
+            THREE.MathUtils.lerp(ref.current.rotation.z, target.rotation.z, 0.1)
+          )
+        }
 
-      requestAnimationFrame(animate)
+        animationFrameId = requestAnimationFrame(animate)
+      }
     }
 
-    animate()
-  }, [])
+    if (isPlaying) {
+      animate()
+    }
 
-  //tuna 0, 5, 15
+    return () => {
+      cancelAnimationFrame(animationFrameId)
+    }
+  }, [isPlaying, obj])
+
   return (
-    <Canvas camera={{ position: [0, 5, 15], fov: 30 }}>
-      {/* Environment Map for realistic reflections */}
+    <Canvas camera={{ position: [0, 10, 20], fov: 45 }}>
       <Environment preset='sunset' />
-
-      {/* Ambient Light */}
       <ambientLight intensity={0.4} />
-
-      {/* Directional Lights */}
       <directionalLight position={[2, 5, 3]} intensity={1.5} castShadow />
       <directionalLight position={[-2, -5, -3]} intensity={1} castShadow />
-
-      {/* Spotlight for enhanced focus on the object */}
       <spotLight
         position={[5, 10, 5]}
         angle={0.15}
@@ -149,29 +93,25 @@ export default function Scene({ modelPath, mtlPath }: SceneProps) {
         castShadow
       />
 
-      {/* Render the model */}
-      <primitive
-        object={obj}
-        ref={ref}
-        scale={[0.15, 0.15, 0.15]}
-        position={[0, 0, 0]} // Center the model
-      />
+      <primitive object={obj} ref={ref} scale={[0.15, 0.15, 0.15]} />
 
-      <Compass />
-      {/* Camera Controls */}
       <OrbitControls
-        target={[0, 0, 0]} // Keep the focus on the center of the model
-        enableZoom={true} // Allow zooming
-        enableRotate={true} // Allow rotation
-        enablePan={false} // Disable panning
-        minPolarAngle={0} // Allow view from below the model
-        maxPolarAngle={Math.PI} // Allow view from above the model
-        maxAzimuthAngle={Math.PI} // Allow full 360-degree rotation horizontally
-        minAzimuthAngle={-Math.PI} // Allow full 360-degree rotation horizontally
+        target={[0, 0, 0]}
+        enableZoom
+        enableRotate
+        enablePan={false}
+        minPolarAngle={0}
+        maxPolarAngle={Math.PI}
+        maxAzimuthAngle={Math.PI}
+        minAzimuthAngle={-Math.PI}
       />
 
-      <axesHelper args={[10]} />
-      <gridHelper />
+      {process.env.NODE_ENV === 'development' && (
+        <>
+          <axesHelper args={[10]} rotation={[0, 0, Math.PI / 2]} />
+          <gridHelper />
+        </>
+      )}
     </Canvas>
   )
 }

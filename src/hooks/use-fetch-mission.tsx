@@ -24,6 +24,7 @@ const useFetchMission = (inspectionId: string | undefined) => {
     heatMapMain: '',
   })
   const [title, setTitle] = useState<string | null>(null)
+  const [formattedDate, SetformattedDate] = useState<string | null>(null)
   const [depth, setDepth] = useState<number>(0)
   const [current, setCurrent] = useState<number>(0)
   const [speed, setSpeed] = useState<number>(0)
@@ -56,11 +57,24 @@ const useFetchMission = (inspectionId: string | undefined) => {
         const videos = Array.isArray(mission.videos) ? mission.videos : []
         const video = videos.length > 0 ? videos[0] : null
         setTitle(mission['mission-details'].mission_title)
-        const telemetry =
-          Array.isArray(mission.data) && mission.data.length > 0
-            ? mission.data[0]
-            : null
+        const timeStrap = mission['mission-details'].created_at
+        if (!timeStrap) {
+          return null // or return a fallback UI
+        }
 
+        const date = new Date(timeStrap)
+        const options: Intl.DateTimeFormatOptions = {
+          weekday: 'long',
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+          timeZoneName: 'short',
+        }
+
+        SetformattedDate(date.toLocaleDateString('en-US', options))
         setVideoUrls({
           cameraMain: video ? video.normal_video_link || '' : '',
           cameraSecondary1: '',
@@ -72,10 +86,15 @@ const useFetchMission = (inspectionId: string | undefined) => {
           heatMapMain: video ? video.heat_map_video_link || '' : '',
         })
 
+        const telemetry =
+          Array.isArray(mission.data) && mission.data.length > 0
+            ? mission.data[0]
+            : null
+
         if (telemetry) {
-          setDepth(parseFloat(telemetry.depth.toFixed(2)))
-          setCurrent(parseFloat(telemetry.gain.toFixed(2)))
-          setSpeed(parseFloat(telemetry.pitch.toFixed(2)))
+          setDepth(parseFloat(telemetry.depth.toFixed(1)))
+          setCurrent(parseFloat(telemetry.gain.toFixed(1)))
+          setSpeed(parseFloat(telemetry.pitch.toFixed(1)))
         } else {
           setDepth(0)
           setCurrent(0)
@@ -95,6 +114,7 @@ const useFetchMission = (inspectionId: string | undefined) => {
   return {
     mission,
     title,
+    formattedDate,
     videoUrls,
     depth,
     current,

@@ -13,7 +13,7 @@ import MultipleSelector, { Option } from '@/components/ui/multiple-selector'
 import { OptionsType } from '@/types/types'
 
 const CHART_OPTIONS: Option[] = [
-  { label: 'Speed vs Altitude', value: 'speed-altitude' },
+  { label: 'Time vs Depth', value: 'time-depth' },
   { label: 'Depth vs Temperature', value: 'depth-temperature' },
   { label: 'Battery Usage', value: 'battery-usage' },
 ]
@@ -23,14 +23,14 @@ const DETECTION_OPTIONS: Option[] = [
   { label: 'Hull Damage', value: 'hull_damage' },
   { label: 'Corrosion', value: 'corrosion' },
   { label: 'Marine Growth', value: 'marine_growth' },
-  { label: 'Leakage', value: 'leakage' },
-  { label: 'Structural Integrity', value: 'structural_integrity' },
-  { label: 'Anchor Issues', value: 'anchor_issues' },
-  { label: 'Sonar Obstruction', value: 'sonar_obstruction' },
-  { label: 'Sensor Malfunction', value: 'sensor_malfunction' },
-  { label: 'Underwater Equipment', value: 'underwater_equipment' },
-  { label: 'Debris', value: 'debris' },
-  { label: 'Environmental Changes', value: 'environmental_changes' },
+  // { label: 'Leakage', value: 'leakage' },
+  // { label: 'Structural Integrity', value: 'structural_integrity' },
+  // { label: 'Anchor Issues', value: 'anchor_issues' },
+  // { label: 'Sonar Obstruction', value: 'sonar_obstruction' },
+  // { label: 'Sensor Malfunction', value: 'sensor_malfunction' },
+  // { label: 'Underwater Equipment', value: 'underwater_equipment' },
+  // { label: 'Debris', value: 'debris' },
+  // { label: 'Environmental Changes', value: 'environmental_changes' },
 ]
 
 type OptionsProps = {

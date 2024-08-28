@@ -1,10 +1,11 @@
 import React from 'react'
 import { Document, Page } from '@react-pdf/renderer'
 import {
+  Watermark,
   Header,
   TitlePage,
   MissionDetailsSection,
-  TunaSection,
+  RoverInfoSection,
   OptionsSection,
   DetectionImagesSection,
   ObservationsSection,
@@ -25,16 +26,19 @@ interface PdfDocumentProps {
     minAccuracy: number
     includeImageDimension: boolean
   }
+  chartsData: {
+    timeDepth?: string // URL or path to the bar chart image
+  }
 }
+
 const PdfDocument: React.FC<PdfDocumentProps> = ({
   mission,
   options,
   imageUrls,
+  chartsData,
 }) => {
   const {
-    // mission_title,
     date,
-    // location,
     operator,
     start_time,
     end_time,
@@ -48,16 +52,10 @@ const PdfDocument: React.FC<PdfDocumentProps> = ({
 
   return (
     <Document>
-      {/* Title Page */}
-      <Page style={styles.titlePage}>
-        <Header />
-      </Page>
+      <TitlePage missionDetails={mission['mission-details']} />
 
-      {/* Mission Details Page */}
       <Page style={styles.detailsPage}>
         <Header />
-        <TitlePage />
-
         <MissionDetailsSection
           date={String(date)}
           operator={operator}
@@ -70,22 +68,27 @@ const PdfDocument: React.FC<PdfDocumentProps> = ({
           max_depth={String(max_depth)}
           gps_coordinates={String(gps_coordinates)}
         />
-
-        <TunaSection />
+        <RoverInfoSection />
         <OptionsSection options={options} />
       </Page>
 
-      {/* Detection Images Page */}
-      {imageUrls.length > 0 && (
-        <Page style={styles.imagesPage}>
-          <DetectionImagesSection imageUrls={imageUrls} />
-        </Page>
-      )}
+      {/* Detection Images Section */}
+      {imageUrls.length > 0 && <DetectionImagesSection imageUrls={imageUrls} />}
 
       {/* Observations Page */}
       <Page style={styles.observationsPage}>
+        <Watermark />
+        <Header />
         <ObservationsSection comments={options.comment} />
       </Page>
+
+      {/* Additional Pages if needed */}
+      {/* Example: */}
+      {/* <Page style={styles.additionalPage}>
+        <Watermark />
+        <Header />
+        <SomeOtherSection />
+      </Page> */}
     </Document>
   )
 }

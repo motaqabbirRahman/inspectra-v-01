@@ -1,3 +1,4 @@
+import React, { useState, Suspense } from 'react'
 import {
   Card,
   CardTitle,
@@ -7,84 +8,119 @@ import {
   CardHeader,
 } from '@/components/ui/card'
 import { Button } from '@/components/custom/button'
-import { Separator } from '@/components/ui/separator'
 import { AspectRatio } from '@radix-ui/react-aspect-ratio'
+import { IoBatteryFull } from 'react-icons/io5'
+import { AiOutlineThunderbolt } from 'react-icons/ai'
 import { Radio } from 'lucide-react'
-import SpeedAltChart from './speed-alt-chart'
-import { BatteryFull } from 'lucide-react'
 import Scene from './model-viewer'
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import TimeDepthChart from './time-depth-chart'
+import DepthTempChart from './depth-temp-chart'
+import BatteryUseChart from './battery-use-chart'
+import { IconTemperature } from '@tabler/icons-react'
 
-export function RightSideBar() {
+interface RightSideBarProps {
+  isPlaying: boolean
+}
+
+const RightSideBar: React.FC<RightSideBarProps> = ({ isPlaying }) => {
+  const [activeTab, setActiveTab] = useState<string>('timeDepth')
+
+  const handleTabChange = (value: string) => {
+    setActiveTab(value)
+  }
+
+  const renderDescription = () => (
+    <CardHeader>
+      <CardDescription>Start Preview to See Live Updates</CardDescription>
+    </CardHeader>
+  )
+
+  const renderChart = () => {
+    switch (activeTab) {
+      case 'depthTemp':
+        return isPlaying ? <DepthTempChart /> : renderDescription()
+      case 'batteryUse':
+        return isPlaying ? <BatteryUseChart /> : renderDescription()
+      case 'timeDepth':
+        return isPlaying ? <TimeDepthChart /> : renderDescription()
+      default:
+        return null
+    }
+  }
+
   return (
     <Card className='overflow-hidden'>
-      <CardHeader className='flex flex-row items-start bg-muted/50'>
-        <div className='grid gap-0.5'>
-          <CardTitle className='group flex items-center gap-2 text-lg'>
-            <h1>ROV</h1>
-          </CardTitle>
+      <CardHeader className=''>
+        <div className='flex items-center justify-between rounded-sm bg-muted/50 p-4'>
+          <CardTitle className='text-lg font-semibold'>ROV</CardTitle>
           <CardDescription>TUNA 2.0</CardDescription>
-        </div>
-        <div className='ml-auto flex items-center gap-1'>
-          <Button
-            variant='outline'
-            size='icon'
-            className='border-color h-8 gap-1'
-          >
-            <Radio />
-          </Button>
         </div>
       </CardHeader>
       <CardContent className='p-6 text-sm'>
         <div className='grid gap-3'>
           <AspectRatio ratio={16 / 9}>
-            <Scene modelPath='/models/tuna.obj' mtlPath='/models/tuna.mtl' />
-          </AspectRatio>
-          {/* <AspectRatio ratio={19 / 12}>
-            <img src={tuna} alt='tuna' className='ml-9' />
-          </AspectRatio> */}
-          {/* <AspectRatio ratio={16 / 9}>
-            <ReactPlayer
-              url='https://ik.imagekit.io/dubotech/assets/video/tuna_3.mp4?updatedAt=1720009687770'
-              playing={true}
-              control={false}
-              loop={true}
-              width='100%'
-              height='100%'
-              className='object-cover'
+            <Scene
+              modelPath='../../../../../public/models/tuna.obj'
+              mtlPath='../../../../../public/models/tuna.mtl'
+              isPlaying={isPlaying}
             />
-          </AspectRatio> */}
-
-          <Separator className='my-2 bg-blue-700' />
-          <div className='flex justify-between'>
-            <div className='font-semibold '>BATTERY</div>
-            <div className='flex items-center justify-between'>
-              <span className='mr-2'>70%</span>
-              <BatteryFull color='#d0d2d0' strokeWidth={1.25} />
-            </div>
-          </div>
-          <ul className='grid gap-3'>
-            <li className='flex items-center justify-between'>
-              <div className='flex items-start justify-between space-x-4'>
-                <div>
-                  <span>14.7 Volt</span>
-                </div>
-                <div>
-                  27<span className='ml-1'>°C</span>
+          </AspectRatio>
+          <Card>
+            <CardHeader>
+              <div className='flex items-center justify-between '>
+                <span className='text-md font-semibold'>BATTERY</span>
+                <div className='flex items-center space-x-2'>
+                  <span className='text-sm'>93%</span>
+                  <IoBatteryFull size={25} />
                 </div>
               </div>
-              <span>2540 / 4366 mAh</span>
-            </li>
-          </ul>
-          <Separator className='my-2' />
+            </CardHeader>
 
-          <SpeedAltChart />
+            <CardContent>
+              <ul className='grid gap-3'>
+                <li className='flex items-center justify-between'>
+                  <div className='flex space-x-4'>
+                    <div className='flex items-center'>
+                      <AiOutlineThunderbolt size={20} />
+                      <span className='ml-1'>14.7 Volt</span>
+                    </div>
+                    <div className='flex items-center'>
+                      <IconTemperature size={20} />
+                      <span className='ml-1'>27°C</span>
+                    </div>
+                  </div>
+                  <span>4199 / 4366 mAh</span>
+                </li>
+              </ul>
+            </CardContent>
+          </Card>
+
+          <Tabs
+            defaultValue='timeDepth'
+            onValueChange={handleTabChange}
+            className='space-y-4'
+          >
+            <Card className='mt-4'>
+              <TabsList className='m-2 space-x-4'>
+                <TabsTrigger value='timeDepth'>Time vs Depth</TabsTrigger>
+                <TabsTrigger value='depthTemp'>Depth vs Temp</TabsTrigger>
+                <TabsTrigger value='batteryUse'>Battery Use</TabsTrigger>
+              </TabsList>
+              <Suspense fallback={<div>Loading...</div>}>
+                {renderChart()}
+              </Suspense>
+            </Card>
+          </Tabs>
         </div>
       </CardContent>
       <CardFooter className='flex flex-row items-center bg-muted/50 px-6 py-3'>
         <div className='text-xs text-muted-foreground'>
-          Updated <time dateTime='2023-11-23'>November 23, 2023</time>
+          Updated <time dateTime='2023-11-23'>August 27, 2024</time>
         </div>
       </CardFooter>
     </Card>
   )
 }
+
+export default RightSideBar

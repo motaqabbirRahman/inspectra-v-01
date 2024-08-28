@@ -12,6 +12,7 @@ import { Mission, OptionsType } from '@/types/types'
 import { Badge } from '@/components/ui/badge'
 import { Skeleton } from '@/components/ui/skeleton'
 import { ReloadIcon } from '@radix-ui/react-icons'
+import { chartsData } from '@/data/charts-data'
 
 const GenerateReport = () => {
   const { inspectionId } = useParams()
@@ -77,6 +78,7 @@ const GenerateReport = () => {
           mission={mission}
           options={options}
           imageUrls={imageUrls}
+          chartsData={chartsData}
         />
       )
       setIsPdfLoading(false)
@@ -103,6 +105,7 @@ const GenerateReport = () => {
           mission={mission}
           options={options}
           imageUrls={imageUrls}
+          chartsData={chartsData}
         />
       )
       setInitialOptions(options)
@@ -114,25 +117,25 @@ const GenerateReport = () => {
     return (
       <Layout>
         <LayoutHeader>
-          <Skeleton className='h-8 w-1/2 rounded' />
+          <Skeleton className='h-8 w-1/2 rounded bg-muted' />
           <div className='ml-auto flex items-center space-x-4'>
-            <Skeleton className='h-8 w-8 rounded-full' />
-            <Skeleton className='h-8 w-8 rounded-full' />
+            <Skeleton className='h-8 w-8 rounded-full bg-muted' />
+            <Skeleton className='h-8 w-8 rounded-full bg-muted' />
           </div>
         </LayoutHeader>
         <LayoutBody className='space-y-4'>
           <div className='grid gap-4 lg:grid-cols-2'>
             <div className='flex items-center justify-between'>
-              <Skeleton className='h-4 w-1/2 rounded' />
-              <Skeleton className='h-10 w-32 rounded' />
+              <Skeleton className='h-4 w-1/2 rounded bg-muted' />
+              <Skeleton className='h-10 w-32 rounded bg-muted' />
             </div>
             <div className='flex justify-end'>
-              <Skeleton className='h-10 w-32 rounded' />
+              <Skeleton className='h-10 w-32 rounded bg-muted' />
             </div>
           </div>
           <div className='grid gap-4 lg:grid-cols-2'>
-            <Skeleton className='h-72 rounded-lg' />
-            <Skeleton className='h-72 rounded-lg' />
+            <Skeleton className='h-72 rounded-lg bg-muted' />
+            <Skeleton className='h-72 rounded-lg bg-muted' />
           </div>
         </LayoutBody>
       </Layout>
