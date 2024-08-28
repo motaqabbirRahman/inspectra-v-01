@@ -59,8 +59,8 @@ const RightSideBar: React.FC<RightSideBarProps> = ({ isPlaying }) => {
         <div className='grid gap-3'>
           <AspectRatio ratio={16 / 9}>
             <Scene
-              modelPath='../../../../../public/models/tuna.obj'
-              mtlPath='../../../../../public/models/tuna.mtl'
+              modelPath='/models/tuna.obj'
+              mtlPath='/models/tuna.mtl'
               isPlaying={isPlaying}
             />
           </AspectRatio>
