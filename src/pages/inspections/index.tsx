@@ -2,17 +2,15 @@ import { useEffect, useState } from 'react'
 import { Search } from '@/components/search'
 import ThemeSwitch from '@/components/theme-switch'
 import { UserNav } from '@/components/user-nav'
-import { useNavigate } from 'react-router-dom' // Import useNavigate for navigation
+import { Link, useNavigate } from 'react-router-dom'
 import { Layout, LayoutBody, LayoutHeader } from '@/components/custom/layout'
 import { DataTable } from './components/data-table'
 import { Mission, MissionData } from '@/types/types'
 import { DataTableSkeleton } from './components/data-table-skeleton'
-import { LoaderCircle } from 'lucide-react'
 
 export default function Inspections() {
   const [inspections, setInspections] = useState<MissionData[]>([])
   const [loading, setLoading] = useState(true)
-  const [loadingDetail, setLoadingDetail] = useState(false) // New state for handling detail page loading
   const [error, setError] = useState<string | null>(null)
   const navigate = useNavigate()
 
@@ -52,13 +50,8 @@ export default function Inspections() {
     return <p>Error: {error}</p>
   }
 
-  const handleRowClick = async (inspectionId: string) => {
-    setLoadingDetail(true) // Show the spinner
-
-    // Simulate loading time before navigating
-    await new Promise((resolve) => setTimeout(resolve, 500)) // Adjust the delay as needed
-
-    navigate(`/inspections/${inspectionId}`)
+  const handleRowClick = (inspectionId: string) => {
+    navigate(`/inspections/${inspectionId}`) // Navigate immediately
   }
 
   const columns = [
@@ -100,24 +93,17 @@ export default function Inspections() {
             </p>
           </div>
         </div>
-
-        {loadingDetail ? (
-          <div className='flex items-center justify-center'>
-            <LoaderCircle />
-          </div>
-        ) : (
-          <div className='-mx-4 flex-1 overflow-auto px-4 py-1 lg:flex-row lg:space-x-12 lg:space-y-0'>
-            {loading ? (
-              <DataTableSkeleton
-                columns={columns}
-                data={inspections}
-                loading={loading}
-              />
-            ) : (
-              <DataTable columns={columns} data={inspections} />
-            )}
-          </div>
-        )}
+        <div className='-mx-4 flex-1 overflow-auto px-4 py-1 lg:flex-row lg:space-x-12 lg:space-y-0'>
+          {loading ? (
+            <DataTableSkeleton
+              columns={columns}
+              data={inspections}
+              loading={loading}
+            />
+          ) : (
+            <DataTable columns={columns} data={inspections} />
+          )}
+        </div>
       </LayoutBody>
     </Layout>
   )
