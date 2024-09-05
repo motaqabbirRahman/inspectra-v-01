@@ -7,7 +7,7 @@ import { Layout, LayoutBody, LayoutHeader } from '@/components/custom/layout'
 import { DataTable } from './components/data-table'
 import { Mission, MissionData } from '@/types/types'
 import { DataTableSkeleton } from './components/data-table-skeleton'
-import LoadingSpinner from '@/components/loading-spinner' // Optional: Add a custom loading spinner component
+import { LoaderCircle } from 'lucide-react'
 
 export default function Inspections() {
   const [inspections, setInspections] = useState<MissionData[]>([])
@@ -102,7 +102,7 @@ export default function Inspections() {
         {/* Display loading spinner if navigating to details page */}
         {loadingDetail ? (
           <div className='flex items-center justify-center'>
-            <LoadingSpinner />{' '}
+            <LoaderCircle />
             {/* Replace this with your own loading component */}
           </div>
         ) : (
