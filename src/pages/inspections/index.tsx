@@ -2,16 +2,19 @@ import { useEffect, useState } from 'react'
 import { Search } from '@/components/search'
 import ThemeSwitch from '@/components/theme-switch'
 import { UserNav } from '@/components/user-nav'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom' // Import useNavigate for navigation
 import { Layout, LayoutBody, LayoutHeader } from '@/components/custom/layout'
 import { DataTable } from './components/data-table'
 import { Mission, MissionData } from '@/types/types'
 import { DataTableSkeleton } from './components/data-table-skeleton'
+import LoadingSpinner from '@/components/loading-spinner' // Optional: Add a custom loading spinner component
 
 export default function Inspections() {
   const [inspections, setInspections] = useState<MissionData[]>([])
   const [loading, setLoading] = useState(true)
+  const [loadingDetail, setLoadingDetail] = useState(false) // New state for handling detail page loading
   const [error, setError] = useState<string | null>(null)
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchInspections = async () => {
@@ -49,17 +52,23 @@ export default function Inspections() {
     return <p>Error: {error}</p>
   }
 
+  const handleRowClick = (inspectionId: string) => {
+    setLoadingDetail(true) // Set loadingDetail to true when a row is clicked
+    navigate(`/inspections/${inspectionId}`)
+  }
+
   const columns = [
     {
       header: 'ID',
       accessorKey: 'id',
       cell: (info: any) => (
-        <Link to={`/inspections/${info.row.original.id}`}>
+        <button
+          onClick={() => handleRowClick(info.row.original.id)} // Trigger navigation with loading
+        >
           {info.row.original.id}
-        </Link>
+        </button>
       ),
     },
-
     {
       header: 'Mission Title',
       accessorKey: 'mission_title',
@@ -89,17 +98,26 @@ export default function Inspections() {
             </p>
           </div>
         </div>
-        <div className='-mx-4 flex-1 overflow-auto px-4 py-1 lg:flex-row lg:space-x-12 lg:space-y-0'>
-          {loading ? (
-            <DataTableSkeleton
-              columns={columns}
-              data={inspections}
-              loading={loading}
-            />
-          ) : (
-            <DataTable columns={columns} data={inspections} />
-          )}
-        </div>
+
+        {/* Display loading spinner if navigating to details page */}
+        {loadingDetail ? (
+          <div className='flex items-center justify-center'>
+            <LoadingSpinner />{' '}
+            {/* Replace this with your own loading component */}
+          </div>
+        ) : (
+          <div className='-mx-4 flex-1 overflow-auto px-4 py-1 lg:flex-row lg:space-x-12 lg:space-y-0'>
+            {loading ? (
+              <DataTableSkeleton
+                columns={columns}
+                data={inspections}
+                loading={loading}
+              />
+            ) : (
+              <DataTable columns={columns} data={inspections} />
+            )}
+          </div>
+        )}
       </LayoutBody>
     </Layout>
   )
