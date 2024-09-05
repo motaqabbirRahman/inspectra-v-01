@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Search } from '@/components/search'
 import ThemeSwitch from '@/components/theme-switch'
 import { UserNav } from '@/components/user-nav'
-import { Link, useNavigate } from 'react-router-dom' // Import useNavigate for navigation
+import { useNavigate } from 'react-router-dom' // Import useNavigate for navigation
 import { Layout, LayoutBody, LayoutHeader } from '@/components/custom/layout'
 import { DataTable } from './components/data-table'
 import { Mission, MissionData } from '@/types/types'
