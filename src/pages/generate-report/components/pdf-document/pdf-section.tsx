@@ -73,6 +73,10 @@ interface PdfDocumentProps {
     includeImageDimension: boolean
   }
 }
+type MissionDetails = {
+  mission_title: string
+  created_at: string
+}
 
 Font.register({
   family: 'Roboto',
@@ -85,7 +89,9 @@ const Header = () => (
   </View>
 )
 
-const TitlePage: React.FC<{ missionDetails: any }> = ({ missionDetails }) => {
+const TitlePage: React.FC<{ missionDetails: MissionDetails }> = ({
+  missionDetails,
+}) => {
   const { mission_title, created_at } = missionDetails
 
   // Format the date
@@ -114,7 +120,7 @@ const TitlePage: React.FC<{ missionDetails: any }> = ({ missionDetails }) => {
   )
 }
 
-const MissionDetailsSection: React.FC<MissionDetailsSectionProps> = ({}) => {
+const MissionDetailsSection: React.FC<MissionDetailsSectionProps> = () => {
   return (
     <View style={styles.section}>
       <Text style={styles.subtitle}>Mission Overview</Text>
@@ -133,10 +139,10 @@ const MissionDetailsSection: React.FC<MissionDetailsSectionProps> = ({}) => {
             <Text style={styles.boldText}>Start Time:</Text> 05:39:09 PM GMT+6
           </Text>
           <Text style={styles.tableCell}>
-            <Text style={styles.boldText}>End Time:</Text> 05:40:20 PM GMT+6
+            <Text style={styles.boldText}>End Time:</Text> 06:20:20 PM GMT+6
           </Text>
           <Text style={styles.tableCell}>
-            <Text style={styles.boldText}>Duration:</Text> 120 sec
+            <Text style={styles.boldText}>Duration:</Text> 41 min
           </Text>
         </View>
         <View style={styles.tableRow}>
@@ -155,10 +161,10 @@ const MissionDetailsSection: React.FC<MissionDetailsSectionProps> = ({}) => {
             <Text style={styles.boldText}>Min Depth:</Text> 0m
           </Text>
           <Text style={styles.tableCell}>
-            <Text style={styles.boldText}>Max Depth:</Text> 10m
+            <Text style={styles.boldText}>Max Depth:</Text> 50m
           </Text>
           <Text style={styles.tableCell}>
-            <Text style={styles.boldText}>Avg Depth:</Text> 9.5m
+            <Text style={styles.boldText}>Avg Depth:</Text> 27m
           </Text>
         </View>
       </View>
@@ -239,7 +245,7 @@ const OptionsSection: React.FC<{ options: PdfDocumentProps['options'] }> = ({
           {options.includeImageDimension ? 'Yes' : 'No'}
         </Text>
         <Text style={styles.tableCell}>
-          <Text style={styles.boldText}>Comment:</Text> {options.comment}
+          {/* <Text style={styles.boldText}>Comment:</Text> {options.comment} */}
         </Text>
       </View>
       <View style={styles.tableRow}>
@@ -341,11 +347,11 @@ const ChartsSection: React.FC<ChartsSectionProps> = ({
 
   return (
     <>
-      {chartPages.map((pageChartTypes, pageIndex) => (
-        <View>
+      {chartPages.map((_, pageIndex) => (
+        <View key={pageIndex}>
           <View style={styles.chartSection}>
             <Text style={styles.subtitle}>Charts</Text>
-            {pageChartTypes.map((chartType, index) => {
+            {chartTypes.map((chartType, index) => {
               const chartKey = mapChartOptionsToData(chartType)
               const chartImage = chartsData[chartKey]
               return chartImage ? (
@@ -358,9 +364,9 @@ const ChartsSection: React.FC<ChartsSectionProps> = ({
             })}
           </View>
           <View style={styles.footer}>
-            <Text>
-              Page {pageIndex + 1} of {chartPages.length}
-            </Text>
+            {/* <Text>
+        Page {pageIndex + 1} of {chartPages.length}
+      </Text> */}
           </View>
         </View>
       ))}

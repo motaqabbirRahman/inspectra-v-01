@@ -13,7 +13,7 @@ import MultipleSelector, { Option } from '@/components/ui/multiple-selector'
 import { OptionsType } from '@/types/types'
 
 const CHART_OPTIONS: Option[] = [
-  { label: 'Speed vs Altitude', value: 'speed-altitude' },
+  { label: 'Time vs Depth', value: 'time-depth' },
   { label: 'Depth vs Temperature', value: 'depth-temperature' },
   { label: 'Battery Usage', value: 'battery-usage' },
 ]

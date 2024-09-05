@@ -22,9 +22,9 @@ const GenerateReport = () => {
   const [loading, setLoading] = useState<boolean>(true)
   const [error, setError] = useState<string | null>(null)
   const [options, setOptions] = useState<OptionsType>({
-    model: 'genesis',
+    model: 'Genesis',
     numImages: 2,
-    includeRoverData: 'yes',
+    includeRoverData: 'Yes',
     detectionType: [],
     charts: [],
     comment: '',
@@ -82,14 +82,14 @@ const GenerateReport = () => {
         />
       )
       setIsPdfLoading(false)
-      setIsButtonDisabled(true) // Disable the button after initial load
+      setIsButtonDisabled(true)
     }
   }, [mission])
 
   // Handle options change
   const handleOptionsChange = (newOptions: OptionsType) => {
     setOptions(newOptions)
-    setIsButtonDisabled(false) // Enable button when options change
+    setIsButtonDisabled(false)
   }
 
   // Regenerate PDF
