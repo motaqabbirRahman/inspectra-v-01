@@ -52,8 +52,12 @@ export default function Inspections() {
     return <p>Error: {error}</p>
   }
 
-  const handleRowClick = (inspectionId: string) => {
-    setLoadingDetail(true) // Set loadingDetail to true when a row is clicked
+  const handleRowClick = async (inspectionId: string) => {
+    setLoadingDetail(true) // Show the spinner
+
+    // Simulate loading time before navigating
+    await new Promise((resolve) => setTimeout(resolve, 500)) // Adjust the delay as needed
+
     navigate(`/inspections/${inspectionId}`)
   }
 
@@ -62,9 +66,7 @@ export default function Inspections() {
       header: 'ID',
       accessorKey: 'id',
       cell: (info: any) => (
-        <button
-          onClick={() => handleRowClick(info.row.original.id)} // Trigger navigation with loading
-        >
+        <button onClick={() => handleRowClick(info.row.original.id)}>
           {info.row.original.id}
         </button>
       ),
@@ -99,11 +101,9 @@ export default function Inspections() {
           </div>
         </div>
 
-        {/* Display loading spinner if navigating to details page */}
         {loadingDetail ? (
           <div className='flex items-center justify-center'>
             <LoaderCircle />
-            {/* Replace this with your own loading component */}
           </div>
         ) : (
           <div className='-mx-4 flex-1 overflow-auto px-4 py-1 lg:flex-row lg:space-x-12 lg:space-y-0'>
