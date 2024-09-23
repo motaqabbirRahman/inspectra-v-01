@@ -1,4 +1,4 @@
-import { HTMLAttributes, useState } from 'react'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 import { z } from 'zod'
@@ -16,44 +16,70 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/custom/button'
 import { PasswordInput } from '@/components/custom/password-input'
 import { cn } from '@/lib/utils'
-
-interface UserAuthFormProps extends HTMLAttributes<HTMLDivElement> {}
-
+import { useAuth } from '@/contexts/auth-context'
+import { useNavigate } from 'react-router-dom'
+interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 const formSchema = z.object({
-  email: z
-    .string()
-    .min(1, { message: 'Please enter your email' })
-    .email({ message: 'Invalid email address' }),
+  username: z.string().min(1, { message: 'Please enter your username' }),
   password: z
     .string()
     .min(1, {
       message: 'Please enter your password',
     })
-    .min(7, {
-      message: 'Password must be at least 7 characters long',
+    .min(4, {
+      message: 'Password must be at least 4 characters long',
     }),
 })
-
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   const [isLoading, setIsLoading] = useState(false)
-
+  const { login } = useAuth()
+  const navigate = useNavigate()
+  // const [isLoggedIn, setIsLoggedIn] = useState(false)
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: '',
+      username: '',
       password: '',
     },
   })
 
-  function onSubmit(data: z.infer<typeof formSchema>) {
+  async function onSubmit(data: z.infer<typeof formSchema>) {
     setIsLoading(true)
-    console.log(data)
+    try {
+      const response = await fetch(
+        'https://inspectraapi.dubotech.com/api/login/',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            username: data.username,
+            password: data.password,
+          }),
+        }
+      )
 
-    setTimeout(() => {
+      // console.log('Response Status:', response.status)
+      // console.log('Response Headers:', response.headers)
+      const responseData = await response.json()
+      // setIsLoggedIn(true)
+      if (!response.ok) {
+        console.error('Response Error Data:', responseData)
+        throw new Error(responseData.message || 'Login failed')
+      }
+
+      // console.log('Response Token:', responseData.token)
+
+      login(responseData.token)
+      localStorage.setItem('token', responseData.token)
+      navigate('/')
+    } catch (err) {
+      console.error('Error Details:', err)
+    } finally {
       setIsLoading(false)
-    }, 3000)
+    }
   }
-
   return (
     <div className={cn('grid gap-6', className)} {...props}>
       <Form {...form}>
@@ -61,12 +87,12 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
           <div className='grid gap-2'>
             <FormField
               control={form.control}
-              name='email'
+              name='username'
               render={({ field }) => (
                 <FormItem className='space-y-1'>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>Username</FormLabel>
                   <FormControl>
-                    <Input placeholder='name@example.com' {...field} />
+                    <Input placeholder='Enter your username' {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

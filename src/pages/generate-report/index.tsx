@@ -69,8 +69,8 @@ const GenerateReport = () => {
 
   // Initial PDF load
   useEffect(() => {
-    if (mission && mission.images) {
-      const imageUrls = mission.images
+    if (mission && mission.mission_detection_image) {
+      const imageUrls = mission.mission_detection_image
         .slice(0, options.numImages)
         .map((image) => image.image_url)
       setPdfData(
@@ -94,10 +94,10 @@ const GenerateReport = () => {
 
   // Regenerate PDF
   const regeneratePdf = () => {
-    if (mission && mission.images) {
+    if (mission && mission.mission_detection_image) {
       setIsButtonDisabled(true)
       setIsPdfLoading(true)
-      const imageUrls = mission.images
+      const imageUrls = mission.mission_detection_image
         .slice(0, options.numImages)
         .map((image) => image.image_url)
       setPdfData(

@@ -1,20 +1,33 @@
+import { Suspense, lazy } from 'react'
 import { createBrowserRouter } from 'react-router-dom'
 import GeneralError from './pages/errors/general-error'
 import NotFoundError from './pages/errors/not-found-error'
 import MaintenanceError from './pages/errors/maintenance-error'
+import ProtectedRoute from './components/protected-route'
+import AppShell from './components/app-shell'
+import { LoadingSpinner } from './components/loading-spinner'
+
+// Lazy load components
+const Dashboard = lazy(() => import('./pages/dashboard'))
+const Inspections = lazy(() => import('./pages/inspections'))
+const InspectionDetails = lazy(() => import('./pages/inspection-details'))
+const GenerateReport = lazy(() => import('./pages/generate-report'))
+const ComingSoon = lazy(() => import('./components/coming-soon'))
+const Apps = lazy(() => import('./pages/apps'))
+const ProfileSettings = lazy(() => import('./pages/settings/profile'))
+const AccountSettings = lazy(() => import('./pages/settings/account'))
+const AppearanceSettings = lazy(() => import('./pages/settings/appearance'))
+const NotificationSettings = lazy(
+  () => import('./pages/settings/notifications')
+)
+const DisplaySettings = lazy(() => import('./pages/settings/display'))
+const ErrorExample = lazy(() => import('./pages/settings/error-example'))
 
 const router = createBrowserRouter([
-  // Auth routes
   {
     path: '/sign-in',
     lazy: async () => ({
       Component: (await import('./pages/auth/sign-in')).default,
-    }),
-  },
-  {
-    path: '/sign-in-2',
-    lazy: async () => ({
-      Component: (await import('./pages/auth/sign-in-2')).default,
     }),
   },
   {
@@ -35,121 +48,230 @@ const router = createBrowserRouter([
       Component: (await import('./pages/auth/otp')).default,
     }),
   },
-
-  // Main routes
   {
     path: '/',
-    lazy: async () => {
-      const AppShell = await import('./components/app-shell')
-      return { Component: AppShell.default }
-    },
+    element: <AppShell />, // Wrap the main route with AppShell
     errorElement: <GeneralError />,
     children: [
       {
         index: true,
-        lazy: async () => ({
-          Component: (await import('./pages/dashboard')).default,
-        }),
+        element: (
+          <Suspense
+            fallback={
+              <div>
+                <LoadingSpinner />
+              </div>
+            }
+          >
+            <ProtectedRoute element={<Dashboard />} />
+          </Suspense>
+        ),
       },
       {
         path: 'inspections',
-        lazy: async () => ({
-          Component: (await import('@/pages/inspections')).default,
-        }),
+        element: (
+          <Suspense
+            fallback={
+              <div>
+                <LoadingSpinner />
+              </div>
+            }
+          >
+            <ProtectedRoute element={<Inspections />} />
+          </Suspense>
+        ),
       },
       {
         path: 'inspections/:inspectionId',
-        lazy: async () => ({
-          Component: (await import('@/pages/inspection-details')).default,
-        }),
+        element: (
+          <Suspense
+            fallback={
+              <div>
+                <LoadingSpinner />
+              </div>
+            }
+          >
+            <ProtectedRoute element={<InspectionDetails />} />
+          </Suspense>
+        ),
       },
       {
         path: 'inspections/:inspectionId/generate-report',
-        lazy: async () => ({
-          Component: (await import('./pages/generate-report')).default,
-        }),
+        element: (
+          <Suspense
+            fallback={
+              <div>
+                <LoadingSpinner />
+              </div>
+            }
+          >
+            <ProtectedRoute element={<GenerateReport />} />
+          </Suspense>
+        ),
       },
       {
         path: 'chats',
-        lazy: async () => ({
-          Component: (await import('@/components/coming-soon')).default,
-        }),
+        element: (
+          <Suspense
+            fallback={
+              <div>
+                <LoadingSpinner />
+              </div>
+            }
+          >
+            <ProtectedRoute element={<ComingSoon />} />
+          </Suspense>
+        ),
       },
       {
         path: 'apps',
-        lazy: async () => ({
-          Component: (await import('@/pages/apps')).default,
-        }),
+        element: (
+          <Suspense
+            fallback={
+              <div>
+                <LoadingSpinner />
+              </div>
+            }
+          >
+            <ProtectedRoute element={<Apps />} />
+          </Suspense>
+        ),
       },
       {
         path: 'users',
-        lazy: async () => ({
-          Component: (await import('@/components/coming-soon')).default,
-        }),
+        element: (
+          <Suspense
+            fallback={
+              <div>
+                <LoadingSpinner />
+              </div>
+            }
+          >
+            <ProtectedRoute element={<ComingSoon />} />
+          </Suspense>
+        ),
       },
       {
         path: 'analysis',
-        lazy: async () => ({
-          Component: (await import('@/components/coming-soon')).default,
-        }),
+        element: (
+          <Suspense
+            fallback={
+              <div>
+                <LoadingSpinner />
+              </div>
+            }
+          >
+            <ProtectedRoute element={<ComingSoon />} />
+          </Suspense>
+        ),
       },
       {
         path: 'settings',
-        lazy: async () => ({
-          Component: (await import('./pages/settings')).default,
-        }),
+        element: (
+          <Suspense
+            fallback={
+              <div>
+                <LoadingSpinner />
+              </div>
+            }
+          >
+            <ProtectedRoute element={<ProfileSettings />} />
+          </Suspense>
+        ),
         errorElement: <GeneralError />,
         children: [
           {
             index: true,
-            lazy: async () => ({
-              Component: (await import('./pages/settings/profile')).default,
-            }),
+            element: (
+              <Suspense
+                fallback={
+                  <div>
+                    <LoadingSpinner />
+                  </div>
+                }
+              >
+                <ProtectedRoute element={<ProfileSettings />} />
+              </Suspense>
+            ),
           },
           {
             path: 'account',
-            lazy: async () => ({
-              Component: (await import('./pages/settings/account')).default,
-            }),
+            element: (
+              <Suspense
+                fallback={
+                  <div>
+                    <LoadingSpinner />
+                  </div>
+                }
+              >
+                <ProtectedRoute element={<AccountSettings />} />
+              </Suspense>
+            ),
           },
           {
             path: 'appearance',
-            lazy: async () => ({
-              Component: (await import('./pages/settings/appearance')).default,
-            }),
+            element: (
+              <Suspense
+                fallback={
+                  <div>
+                    <LoadingSpinner />
+                  </div>
+                }
+              >
+                <ProtectedRoute element={<AppearanceSettings />} />
+              </Suspense>
+            ),
           },
           {
             path: 'notifications',
-            lazy: async () => ({
-              Component: (await import('./pages/settings/notifications'))
-                .default,
-            }),
+            element: (
+              <Suspense
+                fallback={
+                  <div>
+                    <LoadingSpinner />
+                  </div>
+                }
+              >
+                <ProtectedRoute element={<NotificationSettings />} />
+              </Suspense>
+            ),
           },
           {
             path: 'display',
-            lazy: async () => ({
-              Component: (await import('./pages/settings/display')).default,
-            }),
+            element: (
+              <Suspense
+                fallback={
+                  <div>
+                    <LoadingSpinner />
+                  </div>
+                }
+              >
+                <ProtectedRoute element={<DisplaySettings />} />
+              </Suspense>
+            ),
           },
           {
             path: 'error-example',
-            lazy: async () => ({
-              Component: (await import('./pages/settings/error-example'))
-                .default,
-            }),
+            element: (
+              <Suspense
+                fallback={
+                  <div>
+                    <LoadingSpinner />
+                  </div>
+                }
+              >
+                <ProtectedRoute element={<ErrorExample />} />
+              </Suspense>
+            ),
             errorElement: <GeneralError className='h-[50svh]' minimal />,
           },
         ],
       },
     ],
   },
-
-  // Error routes
   { path: '/500', Component: GeneralError },
   { path: '/404', Component: NotFoundError },
   { path: '/503', Component: MaintenanceError },
-
-  // Fallback 404 route
   { path: '*', Component: NotFoundError },
 ])
 

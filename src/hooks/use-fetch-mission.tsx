@@ -37,9 +37,15 @@ const useFetchMission = (inspectionId: string | undefined) => {
         if (!inspectionId) {
           throw new Error('No inspection ID provided.')
         }
-
+        const token = localStorage.getItem('token')
         const response = await fetch(
-          `https://inspectraapi.dubotech.com/api/missions/${inspectionId}`
+          `https://inspectraapi.dubotech.com/api/missions/${inspectionId}`,
+          {
+            method: 'GET',
+            headers: {
+              Authorization: `Token ${token}`,
+            },
+          }
         )
 
         if (!response.ok) {
@@ -48,16 +54,18 @@ const useFetchMission = (inspectionId: string | undefined) => {
 
         const data = await response.json()
         console.log('API Response:', data) // Log the entire response
-        const mission = data[0]
+        const mission = data
         if (!mission) {
           throw new Error('Mission data is missing.')
         }
 
         setMission(mission)
-        const videos = Array.isArray(mission.videos) ? mission.videos : []
+        const videos = Array.isArray(mission.mission_video)
+          ? mission.mission_video
+          : []
         const video = videos.length > 0 ? videos[0] : null
-        setTitle(mission['mission-details'].mission_title)
-        const timeStrap = mission['mission-details'].created_at
+        setTitle(mission.mission_title)
+        const timeStrap = mission.created_at
         if (!timeStrap) {
           return null // or return a fallback UI
         }

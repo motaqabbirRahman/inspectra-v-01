@@ -66,10 +66,15 @@ module.exports = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        waveMotion: {
+          '0%, 100%': { transform: 'translateY(0)' },  // Initial and final position
+          '50%': { transform: 'translateY(-5px)' },   // Moves up in the middle
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        wave: 'waveMotion 1.5s infinite ease-in-out',
       },
     },
   },

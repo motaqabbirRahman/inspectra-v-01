@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/custom/button'
 import {
@@ -10,8 +11,21 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { useAuth } from '@/contexts/auth-context'
 
 export function UserNav() {
+  const navigate = useNavigate()
+  const { logout } = useAuth() // Assuming you have a logout function in your auth context
+
+  const handleLogout = async () => {
+    try {
+      await logout() // Call logout function from your auth context
+      navigate('/sign-in') // Redirect to login page or home page
+    } catch (error) {
+      console.error('Logout failed', error)
+    }
+  }
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -48,7 +62,7 @@ export function UserNav() {
           <DropdownMenuItem>New Team</DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={handleLogout}>
           Log out
           <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
         </DropdownMenuItem>

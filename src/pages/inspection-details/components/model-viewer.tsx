@@ -106,12 +106,8 @@ export default function Scene({ modelPath, mtlPath, isPlaying }: SceneProps) {
         minAzimuthAngle={-Math.PI}
       />
 
-      {process.env.NODE_ENV === 'development' && (
-        <>
-          <axesHelper args={[10]} rotation={[0, 0, Math.PI / 2]} />
-          <gridHelper />
-        </>
-      )}
+      <axesHelper args={[10]} rotation={[0, 0, Math.PI / 2]} />
+      <gridHelper />
     </Canvas>
   )
 }

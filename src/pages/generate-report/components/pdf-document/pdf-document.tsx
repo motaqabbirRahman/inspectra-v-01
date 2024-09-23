@@ -50,11 +50,11 @@ const PdfDocument: React.FC<PdfDocumentProps> = ({
     min_depth,
     max_depth,
     gps_coordinates,
-  } = mission['mission-details']
+  } = mission
 
   return (
     <Document>
-      <TitlePage missionDetails={mission['mission-details']} />
+      <TitlePage missionDetails={mission} />
       <Page style={styles.detailsPage}>
         <Header />
         <MissionDetailsSection

@@ -6,26 +6,22 @@ const cn = (...classes: (string | false | null | undefined)[]) => {
   return classes.filter(Boolean).join(' ')
 }
 
+import { Ship } from 'lucide-react'
+
 export const LoadingSpinner = ({
-  size = 24,
+  size = 48, // Make it larger for better visibility
   className,
   ...props
 }: ISVGProps) => {
   return (
-    <svg
-      xmlns='http://www.w3.org/2000/svg'
-      width={size}
-      height={size}
-      {...props}
-      viewBox='0 0 24 24'
-      fill='none'
-      stroke='currentColor'
-      strokeWidth='2'
-      strokeLinecap='round'
-      strokeLinejoin='round'
-      className={cn('animate-spin', className)}
+    <div
+      className={cn('flex min-h-screen items-center justify-center', className)} // Ensures centering of the spinner on the screen
     >
-      <path d='M21 12a9 9 0 1 1-6.219-8.56' />
-    </svg>
+      <Ship
+        size={size}
+        className={cn('animate-wave ', className)} // Adds wave animation and color
+        {...props}
+      />
+    </div>
   )
 }

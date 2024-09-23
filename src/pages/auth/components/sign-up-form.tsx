@@ -15,6 +15,7 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/custom/button'
 import { PasswordInput } from '@/components/custom/password-input'
 import { cn } from '@/lib/utils'
+import axios from 'axios'
 
 interface SignUpFormProps extends HTMLAttributes<HTMLDivElement> {}
 
@@ -26,13 +27,10 @@ const formSchema = z
       .email({ message: 'Invalid email address' }),
     password: z
       .string()
-      .min(1, {
-        message: 'Please enter your password',
-      })
-      .min(7, {
-        message: 'Password must be at least 7 characters long',
-      }),
+      .min(1, { message: 'Please enter your password' })
+      .min(7, { message: 'Password must be at least 7 characters long' }),
     confirmPassword: z.string(),
+    company: z.string().min(1, { message: 'Please enter your company name' }),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords don't match.",
@@ -48,16 +46,27 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
       email: '',
       password: '',
       confirmPassword: '',
+      company: '',
     },
   })
 
-  function onSubmit(data: z.infer<typeof formSchema>) {
+  async function onSubmit(data: z.infer<typeof formSchema>) {
     setIsLoading(true)
     console.log(data)
+    try {
+      await axios.post('https://inspectraapi.dubotech.com/api/register/', {
+        username: data.email,
+        password: data.password,
+        email: data.email,
+        company: data.company,
+      })
 
-    setTimeout(() => {
+      // console.log('Signup successful:', response.data)
+    } catch (error) {
+      // console.error('Signup failed:', error)
+    } finally {
       setIsLoading(false)
-    }, 3000)
+    }
   }
 
   return (
@@ -99,6 +108,19 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
                   <FormLabel>Confirm Password</FormLabel>
                   <FormControl>
                     <PasswordInput placeholder='********' {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name='company'
+              render={({ field }) => (
+                <FormItem className='space-y-1'>
+                  <FormLabel>Company</FormLabel>
+                  <FormControl>
+                    <Input placeholder='Company Name' {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

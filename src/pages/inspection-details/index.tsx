@@ -14,10 +14,11 @@ import { useParams, useNavigate } from 'react-router-dom'
 import useFetchMission from '@/hooks/use-fetch-mission'
 import BreadCrumb from './components/bread-crumb'
 import { Skeleton } from '@/components/ui/skeleton'
-import map from '../../../public/static/images/google-map-placeholder.png'
-import { useVideoContext } from '@/contexts/video-context'
+// import map from '../../../public/static/images/google-map-placeholder.png'
+import { useVideoContext } from '../../contexts/video-context'
 import { Badge } from '@/components/ui/badge'
 import { Play, Pause } from 'lucide-react'
+import DvlViewer from './components/dvl-viewer'
 
 const InspectionDetails = () => {
   const { inspectionId } = useParams<{ inspectionId: string }>()
@@ -31,6 +32,11 @@ const InspectionDetails = () => {
   const [currentDepth, setCurrentDepth] = useState<number>(10)
   const [currentCurrent, setCurrentCurrent] = useState<number>(1.0)
   const [currentSpeed, setCurrentSpeed] = useState<number>(3)
+  // const [mapState, setMapState] = useState({
+  //   // Initialize with default values or saved state
+  //   center: { lat: 22.341855, lng: 91.756365 },
+  //   zoom: 10,
+  // })
 
   useEffect(() => {
     let intervalId: NodeJS.Timeout | undefined
@@ -146,7 +152,7 @@ const InspectionDetails = () => {
                         isPlaying={isPlaying}
                         handlePlayPause={handlePlayPause}
                       />
-                      <div className='rounde absolute bottom-20 left-0 m-2'>
+                      <div className='absolute bottom-20 left-0 m-2 rounded-lg'>
                         <DataCard
                           icon={ArrowDownNarrowWide}
                           label='Depth'
@@ -236,8 +242,11 @@ const InspectionDetails = () => {
                 <div className='lg:space-x-4 xl:flex'>
                   <div className='flex flex-col xl:flex-1'>
                     <Card className='grid flex-1 gap-0'>
-                      <AspectRatio ratio={16 / 9}>
-                        <div className='absolute left-4 top-4'>
+                      <AspectRatio
+                        ratio={16 / 9}
+                        className='relative h-full w-full'
+                      >
+                        <div className='absolute left-4 top-4 z-10'>
                           <Badge
                             variant='outline'
                             className='rounded-full bg-background shadow-md'
@@ -245,11 +254,13 @@ const InspectionDetails = () => {
                             DVL Data
                           </Badge>
                         </div>
-                        <img
-                          src={map}
-                          alt='Google Map'
-                          className='h-full w-full rounded-lg object-cover'
-                        />
+                        <div className='h-full w-full overflow-hidden rounded-lg'>
+                          <DvlViewer
+                            isPlaying={isPlaying}
+                            // mapState={mapState}
+                            // onMapStateChange={setMapState}
+                          />
+                        </div>
                       </AspectRatio>
                     </Card>
                   </div>

@@ -57,10 +57,7 @@ const RightSideBar: React.FC<RightSideBarProps> = ({ isPlaying }) => {
       </CardHeader>
       <CardContent className='p-6 text-sm'>
         <div className='grid gap-3'>
-          <AspectRatio
-            ratio={16 / 9}
-            className='rounded-lg bg-gradient-to-r from-blue-900 to-blue-700'
-          >
+          <AspectRatio ratio={16 / 9} className='rounded-lg'>
             <Scene
               modelPath='/models/tuna.obj'
               mtlPath='/models/tuna.mtl'

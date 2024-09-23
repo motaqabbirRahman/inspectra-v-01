@@ -10,24 +10,23 @@ export interface VideoUrls {
 }
 
 export interface Mission {
-  'mission-details': {
-    id: number
-    customer: number
-    mission_title: string
-    mission_slug: string
-    created_at: string
-    date: number
-    location: string
-    operator: string
-    start_time: number
-    end_time: number
-    duration: number
-    min_temp: number
-    max_temp: number
-    min_depth: number
-    max_depth: number
-    gps_coordinates: string
-  }
+  id: number
+  customer: number
+  mission_title: string
+  mission_slug: string
+  created_at: string
+  date: number
+  location: string
+  operator: string
+  start_time: number
+  end_time: number
+  duration: number
+  min_temp: number
+  max_temp: number
+  min_depth: number
+  max_depth: number
+  gps_coordinates: string
+
   videos: Array<{
     id: number
     mission: number
@@ -38,7 +37,7 @@ export interface Mission {
     heat_map_video_url: string | null
     created_at: string
   }>
-  images: Array<{
+  mission_detection_image: Array<{
     id: number
     mission: number
     image_url: string

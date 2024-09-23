@@ -16,19 +16,27 @@ export default function Inspections() {
 
   useEffect(() => {
     const fetchInspections = async () => {
+      const token = localStorage.getItem('token')
       try {
         const response = await fetch(
-          'https://inspectraapi.dubotech.com/api/missions/'
+          'https://inspectraapi.dubotech.com/api/missions/user',
+          {
+            method: 'GET',
+            headers: {
+              Authorization: `Token ${token}`,
+            },
+          }
         )
+
         if (!response.ok) {
           throw new Error('Failed to fetch inspections')
         }
         const data: Mission[] = await response.json()
-
+        console.log(data)
         const transformedData: MissionData[] = data.map((inspection) => ({
-          id: inspection['mission-details'].id,
-          mission_title: inspection['mission-details'].mission_title,
-          created_at: inspection['mission-details'].created_at,
+          id: inspection.id,
+          mission_title: inspection.mission_title,
+          created_at: inspection.created_at,
         }))
 
         setInspections(transformedData)
